@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing and Paper Use Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        a {
+            display: inline;
+            width: 150px;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg">
+        
+        <img src="4.png.png" width="150px" height="auto"><br>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Kappa Box Calculator</h1>
+         <div >
+            <a href="index2.html" style="color:     white">BOOKLET</a>
+             <a href="index.html" style="color:     white">CUT TO SHEET</a>
+              <a href="index3.html" style="color:     white">BAG</a>
+        </div> <br>
+
+        <!-- Main Input Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="mb-4 md:col-span-2">
+                <label for="boxType" class="block text-gray-700 text-sm font-semibold mb-2">Box Type:</label>
+                <select id="boxType" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="select">---select---</option>
+                    <option value="tray_gally">Tray Gally Box</option>
+                    <option value="top_bottom">Top Bottom Box</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="inputHeight" class="block text-gray-700 text-sm font-semibold mb-2">Box Height:</label>
+                <input type="number" id="inputHeight" placeholder="e.g., 2" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="inputWidth" class="block text-gray-700 text-sm font-semibold mb-2">Box Width:</label>
+                <input type="number" id="inputWidth" placeholder="e.g., 7" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="inputLength" class="block text-gray-700 text-sm font-semibold mb-2">Box Length:</label>
+                <input type="number" id="inputLength" placeholder="e.g., 7" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="inputQuantity" class="block text-gray-700 text-sm font-semibold mb-2">Quantity (Qty):</label>
+                <input type="number" id="inputQuantity" placeholder="e.g., 1000" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="inputMaking" class="block text-gray-700 text-sm font-semibold mb-2">Making (per unit):</label>
+                <input type="number" id="inputMaking" placeholder="e.g., 5" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+             <!-- Magnet Dropdown -->
+            <div class="mb-4">
+                <label for="magnetType" class="block text-gray-700 text-sm font-semibold mb-2">Magnet Type:</label>
+                <select id="magnetType" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="none">None</option>
+                    <option value="small">Magnet - Small</option>
+                    <option value="medium">Magnet - Medium</option>
+                    <option value="small_2pc">Magnet - Small 2pc</option>
+                    <option value="medium_2pc">Magnet - Medium 2pc</option>
+                </select>
+            </div>
+             <!-- Other Fabrication -->
+             <div class="mb-4 md:col-span-2">
+                <label for="otherFabrication" class="block text-gray-700 text-sm font-semibold mb-2">Other Fabrication Amt:</label>
+                <input type="number" id="otherFabrication" placeholder="e.g., 100" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+        </div>
+       
+        <!-- Collapsible Hilton Section -->
+        <div class="mt-4 border-t pt-4">
+            <button id="hiltonToggle" class="w-full flex justify-between items-center text-left text-lg font-semibold text-gray-700 focus:outline-none">
+                <span>Hilton Section</span>
+                <svg class="w-6 h-6 toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="hiltonContent" class="hidden mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input type="number" id="hiltonWidth" placeholder="Width" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+                <input type="number" id="hiltonLength" placeholder="Length" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+                <input type="number" id="hiltonHeight" placeholder="Height" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+            </div>
+        </div>
+
+        <!-- Collapsible UVA Foam Section -->
+        <div class="mt-4 border-t pt-4">
+             <button id="uvaToggle" class="w-full flex justify-between items-center text-left text-lg font-semibold text-gray-700 focus:outline-none">
+                <span>UVA Foam Section</span>
+                <svg class="w-6 h-6 toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="uvaContent" class="hidden mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <input type="number" id="uvaWidth" placeholder="Width" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+                <input type="number" id="uvaLength" placeholder="Length" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+                <input type="number" id="uvaHeight" placeholder="Height" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+                <select id="uvaQuality" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700">
+                    <option value="80">Export (Rs 80)</option>
+                    <option value="50">Indian (Rs 50)</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="calculateBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 mt-6">
+            Calculate Sizes & Costs
+        </button>
+
+        <!-- RESULTS DISPLAY -->
+        <div id="resultDisplay" class="mt-8 p-4 bg-gray-100 rounded-lg text-left text-base font-semibold text-gray-800 hidden">
+            <!-- Dimensions, Material Costs, etc. will be injected here by JS -->
+        </div>
+
+        <!-- Modal -->
+        <div id="messageModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+             <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4" id="modalTitle"></h3>
+                <p class="text-gray-600 mb-6" id="modalMessage"></p>
+                <button id="closeModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA AND CONSTANTS ---
+            const FIXED_DIE_CHARGE = 5000;
+            const allSheets = [
+                { type: "kappa", width: 31, height: 41, cost: 60, name: "31x41 Kappa" },
+                { type: "kappa", width: 25, height: 36, cost: 45, name: "25x36 Kappa" },
+                { type: "paper", width: 20, height: 30, cost: 17, name: "20x30 Paper" },
+                { type: "paper", width: 18, height: 25, cost: 12.75, name: "18x25 Paper" },
+                { type: "paper", width: 18, height: 23, cost: 11.70, name: "18x23 Paper" },
+                { type: "paper", width: 15, height: 20, cost: 8.50, name: "15x20 Paper" }
+            ];
+            const kappaBoards = allSheets.filter(s => s.type === 'kappa');
+            const paperSheets = allSheets.filter(s => s.type === 'paper');
+
+            // --- DOM ELEMENT REFERENCES ---
+            const inputs = {
+                boxType: document.getElementById('boxType'),
+                height: document.getElementById('inputHeight'),
+                width: document.getElementById('inputWidth'),
+                length: document.getElementById('inputLength'),
+                quantity: document.getElementById('inputQuantity'),
+                making: document.getElementById('inputMaking'),
+                magnet: document.getElementById('magnetType'),
+                otherFabrication: document.getElementById('otherFabrication'),
+                hilton: {
+                    width: document.getElementById('hiltonWidth'),
+                    length: document.getElementById('hiltonLength'),
+                    height: document.getElementById('hiltonHeight'),
+                    toggle: document.getElementById('hiltonToggle'),
+                    content: document.getElementById('hiltonContent'),
+                },
+                uva: {
+                    width: document.getElementById('uvaWidth'),
+                    length: document.getElementById('uvaLength'),
+                    height: document.getElementById('uvaHeight'),
+                    quality: document.getElementById('uvaQuality'),
+                    toggle: document.getElementById('uvaToggle'),
+                    content: document.getElementById('uvaContent'),
+                }
+            };
+            const resultDisplayDiv = document.getElementById('resultDisplay');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const messageModal = document.getElementById('messageModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+
+            // --- HELPER FUNCTIONS ---
+            const showMessage = (title, message) => {
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+                messageModal.classList.remove('hidden');
+            };
+
+            const hideMessage = () => messageModal.classList.add('hidden');
+            
+            const calculateUps = (boardW, boardH, itemW, itemH) => {
+                if (!itemW || !itemH || itemW <= 0 || itemH <= 0) return 0;
+                const ups1 = Math.floor(boardW / itemW) * Math.floor(boardH / itemH);
+                const ups2 = Math.floor(boardW / itemH) * Math.floor(boardH / itemW);
+                return Math.max(ups1, ups2);
+            };
+            
+            const findLowestCost = (sheets, itemW, itemH) => {
+                let lowestCost = { cost: Infinity, name: "N/A", ups: 0 };
+                sheets.forEach(sheet => {
+                    const ups = calculateUps(sheet.width, sheet.height, itemW, itemH);
+                    if (ups > 0) {
+                        const costPerUnit = sheet.cost / ups;
+                        if (costPerUnit < lowestCost.cost) {
+                            lowestCost = { cost: costPerUnit, name: sheet.name, ups: ups };
+                        }
+                    }
+                });
+                return lowestCost;
+            };
+
+            const toggleSection = (content, icon) => {
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
+
+            // --- MAIN CALCULATION FUNCTION ---
+            const calculateAllCosts = () => {
+                // 1. Get and Validate Inputs
+                const values = {
+                    boxType: inputs.boxType.value,
+                    h: parseFloat(inputs.height.value),
+                    w: parseFloat(inputs.width.value),
+                    l: parseFloat(inputs.length.value),
+                    qty: parseFloat(inputs.quantity.value),
+                    making: parseFloat(inputs.making.value),
+                    magnet: inputs.magnet.value,
+                    otherFabrication: parseFloat(inputs.otherFabrication.value) || 0,
+                    uvaW: parseFloat(inputs.uva.width.value),
+                    uvaL: parseFloat(inputs.uva.length.value),
+                    uvaH: parseFloat(inputs.uva.height.value),
+                    uvaRate: parseFloat(inputs.uva.quality.value),
+                    hiltonW: parseFloat(inputs.hilton.width.value),
+                    hiltonL: parseFloat(inputs.hilton.length.value),
+                    hiltonH: parseFloat(inputs.hilton.height.value),
+                };
+
+                const mainValues = [values.h, values.w, values.l, values.qty, values.making];
+                if (mainValues.some(v => isNaN(v))) {
+                    showMessage("Invalid Input", "Please enter valid numbers for all main fields.");
+                    return;
+                }
+                if (values.qty <= 0) {
+                    showMessage("Invalid Input", "Quantity must be a positive number.");
+                    return;
+                }
+
+                // 2. Calculate All Dimensions
+                const dims = {
+                    trayKappaW: (values.h * 2) + values.w,
+                    trayKappaH: values.l + (values.h * 2),
+                    gallyKappaW: values.w,
+                    gallyKappaH: (values.l * 2) + (values.h * 2),
+                };
+                dims.trayPaperW = dims.trayKappaW + 2;
+                dims.trayPaperH = dims.trayKappaH + 2;
+                dims.trayLinerW = dims.trayKappaW;
+                dims.trayLinerH = dims.trayKappaH;
+                dims.gallyPaperW = dims.gallyKappaW + 2;
+                dims.gallyPaperH = dims.gallyKappaH + 2;
+                dims.gallyLinerW = dims.gallyKappaW;
+                dims.gallyLinerH = dims.gallyKappaH;
+
+
+                // 3. Find Lowest Cost for Each Material
+                const costs = {
+                    trayKappa: findLowestCost(kappaBoards, dims.trayKappaW, dims.trayKappaH),
+                    trayPaper: findLowestCost(paperSheets, dims.trayPaperW, dims.trayPaperH),
+                    trayLiner: findLowestCost(paperSheets, dims.trayLinerW, dims.trayLinerH),
+                    gallyKappa: findLowestCost(kappaBoards, dims.gallyKappaW, dims.gallyKappaH),
+                    gallyPaper: findLowestCost(paperSheets, dims.gallyPaperW, dims.gallyPaperH),
+                    gallyLiner: findLowestCost(paperSheets, dims.gallyLinerW, dims.gallyLinerH),
+                };
+
+                // 4. Calculate Additional Component Costs
+                let magnetCost = 0;
+                switch(values.magnet) {
+                    case 'small': magnetCost = 5 * values.qty; break;
+                    case 'medium': magnetCost = 8 * values.qty; break;
+                    case 'small_2pc': magnetCost = 4 * 2 * values.qty; break;
+                    case 'medium_2pc': magnetCost = 7 * 2 * values.qty; break;
+                }
+
+                let uvaCostResult = { cost: 0, ups: 0 };
+                if (!isNaN(values.uvaW) && !isNaN(values.uvaL) && !isNaN(values.uvaH)) {
+                    const uvaUps = calculateUps(39, 78, values.uvaW, values.uvaL);
+                    if (uvaUps > 0) {
+                        const fullSheetCost = values.uvaH * values.uvaRate;
+                        uvaCostResult = { cost: fullSheetCost / uvaUps, ups: uvaUps };
+                    }
+                }
+                
+                let hiltonCostResult = { cost: 0, ups: 0 };
+                 if (!isNaN(values.hiltonW) && !isNaN(values.hiltonL) && !isNaN(values.hiltonH)) {
+                    const hiltonUps = calculateUps(56, 1560, values.hiltonW, values.hiltonL);
+                    if (hiltonUps > 0) {
+                        const fullSheetCost = values.hiltonH * 280;
+                        hiltonCostResult = { cost: fullSheetCost / hiltonUps, ups: hiltonUps };
+                    }
+                }
+                
+                // 5. Calculate Production & Final Costs
+                let printingCost = 0;
+                let punchingCost = 0;
+                if (costs.trayPaper.ups > 0) {
+                    const sheetsNeeded = (values.qty / costs.trayPaper.ups) + (values.qty * 0.05);
+                    printingCost = (Math.ceil(sheetsNeeded / 1000) * 500 + 2200) * 2;
+                    punchingCost = Math.ceil((values.qty / costs.trayPaper.ups) / 1000) * 500;
+                }
+
+                const makingCost = (values.making + 2) * values.qty;
+                const uvaFoamCostTotal = Number.isFinite(uvaCostResult.cost) ? uvaCostResult.cost * values.qty : 0;
+                const hiltonCostTotal = Number.isFinite(hiltonCostResult.cost) ? hiltonCostResult.cost * values.qty : 0;
+
+                let totalProjectCost = 0;
+                let totalMaterialCostUnit = 0;
+
+                if (values.boxType === 'top_bottom') {
+                    const baseMaterialCost = (costs.trayKappa.cost || 0) + (costs.trayPaper.cost || 0) + (costs.trayLiner.cost || 0);
+                    const baseMaterialTotal = baseMaterialCost * values.qty;
+                    const productionCosts = makingCost + printingCost + magnetCost + uvaFoamCostTotal + hiltonCostTotal;
+                    totalProjectCost = (baseMaterialTotal + punchingCost + FIXED_DIE_CHARGE) * 2 + productionCosts + values.otherFabrication;
+                    totalMaterialCostUnit = baseMaterialCost * 2;
+                } else { // Tray Gally Box
+                    totalMaterialCostUnit = [costs.trayKappa, costs.trayPaper, costs.trayLiner, costs.gallyKappa, costs.gallyPaper, costs.gallyLiner, uvaCostResult, hiltonCostResult]
+                        .reduce((sum, result) => sum + (Number.isFinite(result.cost) ? result.cost : 0), 0);
+                    totalProjectCost = (totalMaterialCostUnit * values.qty) + printingCost + punchingCost + makingCost + magnetCost + FIXED_DIE_CHARGE + values.otherFabrication;
+                }
+
+
+                // 6. Generate and Display Results HTML
+                const displayCost = (result) => Number.isFinite(result.cost) ? `${result.cost.toFixed(2)} Rs per unit` : 'N/A';
+                const displayInfo = (result, type) => {
+                    if (Number.isFinite(result.cost) && result.ups > 0) {
+                        let sheetName = result.name;
+                        if(type === 'uva') sheetName = '39x78 UVA Sheet';
+                        if(type === 'hilton') sheetName = '56x1560 Hilton Sheet';
+                        return `(Using ${sheetName}, getting ${result.ups} units)`;
+                    }
+                    return `(No sheet fits)`;
+                };
+
+                resultDisplayDiv.innerHTML = `
+                    <div id="dimensionsSection">
+                        <h2 class="text-xl font-bold text-gray-700 mb-2">Calculated Dimensions</h2>
+                        <p>Tray Kappa: ${dims.trayKappaW.toFixed(2)} x ${dims.trayKappaH.toFixed(2)}</p>
+                        <p>Tray Wrap Paper: ${dims.trayPaperW.toFixed(2)} x ${dims.trayPaperH.toFixed(2)}</p>
+                        <p>Tray Liner Paper: ${dims.trayLinerW.toFixed(2)} x ${dims.trayLinerH.toFixed(2)}</p>
+                        <p>Gally Kappa: ${dims.gallyKappaW.toFixed(2)} x ${dims.gallyKappaH.toFixed(2)}</p>
+                        <p>Gally Overlay Paper: ${dims.gallyPaperW.toFixed(2)} x ${dims.gallyPaperH.toFixed(2)}</p>
+                        <p>Gally Liner Paper: ${dims.gallyLinerW.toFixed(2)} x ${dims.gallyLinerH.toFixed(2)}</p>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-700 mt-6 mb-2 border-t pt-4">Material Cost Summary</h2>
+                    <div class="mt-4 p-3 bg-blue-100 rounded-lg text-blue-800"><h3 class="text-lg font-bold">Lowest Tray Kappa Cost:</h3><p>${displayCost(costs.trayKappa)}</p><p class="text-sm">${displayInfo(costs.trayKappa)}</p></div>
+                    <div class="mt-4 p-3 bg-purple-100 rounded-lg text-purple-800"><h3 class="text-lg font-bold">Lowest Tray Wrap Paper Cost:</h3><p>${displayCost(costs.trayPaper)}</p><p class="text-sm">${displayInfo(costs.trayPaper)}</p></div>
+                    <div class="mt-4 p-3 bg-rose-100 rounded-lg text-rose-800"><h3 class="text-lg font-bold">Lowest Tray Liner Paper Cost:</h3><p>${displayCost(costs.trayLiner)}</p><p class="text-sm">${displayInfo(costs.trayLiner)}</p></div>
+                    <div class="mt-4 p-3 bg-cyan-100 rounded-lg text-cyan-800"><h3 class="text-lg font-bold">Lowest Gally Kappa Cost:</h3><p>${displayCost(costs.gallyKappa)}</p><p class="text-sm">${displayInfo(costs.gallyKappa)}</p></div>
+                    <div class="mt-4 p-3 bg-fuchsia-100 rounded-lg text-fuchsia-800"><h3 class="text-lg font-bold">Lowest Gally Overlay Paper Cost:</h3><p>${displayCost(costs.gallyPaper)}</p><p class="text-sm">${displayInfo(costs.gallyPaper)}</p></div>
+                    <div class="mt-4 p-3 bg-orange-100 rounded-lg text-orange-800"><h3 class="text-lg font-bold">Lowest Gally Liner Paper Cost:</h3><p>${displayCost(costs.gallyLiner)}</p><p class="text-sm">${displayInfo(costs.gallyLiner)}</p></div>
+                    <div class="mt-4 p-3 bg-lime-100 rounded-lg text-lime-800"><h3 class="text-lg font-bold">Lowest UVA Foam Cost:</h3><p>${displayCost(uvaCostResult)}</p><p class="text-sm">${displayInfo(uvaCostResult, 'uva')}</p></div>
+                    <div class="mt-4 p-3 bg-stone-100 rounded-lg text-stone-800"><h3 class="text-lg font-bold">Lowest Hilton Cost:</h3><p>${displayCost(hiltonCostResult)}</p><p class="text-sm">${displayInfo(hiltonCostResult, 'hilton')}</p></div>
+                    
+                    <h2 class="text-xl font-bold text-gray-700 mt-6 mb-2 border-t pt-4">Final Totals</h2>
+                    <div class="mt-4 p-3 bg-green-100 rounded-lg text-green-800"><h3 class="text-lg font-bold">Total Material Cost Per Product:</h3><p>${totalMaterialCostUnit.toFixed(2)} Rs</p><p class="text-xs">(all material costs combined)</p></div>
+                    <div class="mt-4 p-3 bg-yellow-100 rounded-lg text-yellow-800"><h3 class="text-lg font-bold">Printing Cost:</h3><p>${printingCost.toFixed(2)} Rs</p></div>
+                    <div class="mt-4 p-3 bg-orange-100 rounded-lg text-orange-800"><h3 class="text-lg font-bold">Punching Cost:</h3><p>${punchingCost.toFixed(2)} Rs</p></div>
+                    <div class="mt-4 p-3 bg-red-100 rounded-lg text-red-800"><h3 class="text-lg font-bold">Making Cost:</h3><p>${makingCost.toFixed(2)} Rs</p></div>
+                    <div class="mt-4 p-3 bg-pink-100 rounded-lg text-pink-800"><h3 class="text-lg font-bold">Magnet Cost:</h3><p>${magnetCost.toFixed(2)} Rs</p></div>
+                    <div class="mt-4 p-3 bg-gray-200 rounded-lg text-gray-800"><h3 class="text-lg font-bold">Other Fabrication Cost:</h3><p>${values.otherFabrication.toFixed(2)} Rs</p></div>
+                    <div class="mt-4 p-3 bg-teal-100 rounded-lg text-teal-800"><h3 class="text-lg font-bold">Fixed Die Charge:</h3><p>${FIXED_DIE_CHARGE.toFixed(2)} Rs</p></div>
+                    <div class="mt-4 p-3 bg-indigo-100 rounded-lg text-indigo-800"><h3 class="text-lg font-bold">Total Project Cost (All Inclusive):</h3><p>${totalProjectCost.toFixed(2)} Rs</p><p class="text-base mt-2">Per PC Rate: ${(totalProjectCost / values.qty).toFixed(2)} Rs</p></div>
+                `;
+                
+                resultDisplayDiv.classList.remove('hidden');
+            };
+
+            // --- EVENT LISTENERS ---
+            calculateBtn.addEventListener('click', calculateAllCosts);
+            closeModalBtn.addEventListener('click', hideMessage);
+            inputs.hilton.toggle.addEventListener('click', () => toggleSection(inputs.hilton.content, inputs.hilton.toggle.querySelector('.toggle-icon')));
+            inputs.uva.toggle.addEventListener('click', () => toggleSection(inputs.uva.content, inputs.uva.toggle.querySelector('.toggle-icon')));
+            
+            // Add keydown listeners for main inputs
+            [inputs.height, inputs.width, inputs.length, inputs.quantity, inputs.making, inputs.otherFabrication].forEach(input => {
+                input.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') calculateAllCosts();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

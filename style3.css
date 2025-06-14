@@ -1,0 +1,167 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  padding: 15px;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+a { text-align: center;
+            display: inline;
+            width: 150px;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px 10px 10px 10px ;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+
+h2 {
+  text-align: right;
+  margin-left: 200px;
+  margin-bottom: 20px;
+  color: #0056b3;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #004494;
+}
+
+#result {
+  margin-top: 30px;
+  background: #c8e3ff;
+  padding: 15px;
+  border-left: 5px solid #0056b3;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+@media print {
+  button, select, input, label {
+    display: none;
+  }
+  #result {
+    border: none;
+    background: white;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  .container {
+    padding: 10px;
+  }
+  .navbar {
+    padding: 10px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  label {
+    font-size: 14px;
+  }
+  input, select {
+    padding: 6px;
+  }
+  button {
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-right: 5px;
+  }
+  #result {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  body {
+    padding: 5px;
+  }
+  .container {
+    padding: 5px;
+  }
+  .navbar {
+    padding: 5px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+  label {
+    font-size: 12px;
+  }
+  input, select {
+    padding: 4px;
+  }
+  button {
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+  #result {
+    padding: 5px;
+    font-size: 12px;
+  }
+}
