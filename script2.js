@@ -221,9 +221,9 @@ function calculate() {
     let laminationCost = 0;
     if (lamination !== "none") {
         if (lamination === "matt-all") {
-            laminationCost = weight * 0.42 * (qty + wastage) / 100 * (pages / ups * 2 + 0.5);
+            laminationCost = weight * 0.48 * (qty + wastage) / 100 * (pages / ups * 2 + 0.5);
         } else if (lamination === "gloss-all") {
-            laminationCost = weight * 0.40 * (qty + wastage) / 100 * (pages / ups * 2 + 0.5);
+            laminationCost = weight * 0.45 * (qty + wastage) / 100 * (pages / ups * 2 + 0.5);
         } else if (lamination === "varnish-all") {
             laminationCost = weight * 0.25 * (qty + wastage) / 100 * (pages / ups * 2 + 0.5);
         }
@@ -257,12 +257,12 @@ function calculate() {
             if (qty < 1000) {
                 coverPrintingCost = makrdy;
             } else {
-                coverPrintingCost = (Math.ceil(qty2 / (ups/4)  / 1000)* imp + (makrdy - imp));
+                coverPrintingCost = (Math.ceil(qty2 / (ups/8)  / 1000)* imp + (makrdy - imp));
             }
         } else if (coverPrintingColor === "single") {
-            coverPrintingCost = (Math.ceil(qty2 /(ups/4)/ 1000) * 150 + (600 - 150));
+            coverPrintingCost = (Math.ceil(qty2 /(ups/8)/ 1000) * 150 + (600 - 150));
         } else if (coverPrintingColor === "2+2") {
-            coverPrintingCost = (Math.ceil(qty2 /(ups/4) / 1000) * 200 + (800 - 200));
+            coverPrintingCost = (Math.ceil(qty2 /(ups/8) / 1000) * 200 + (800 - 200));
         }
         // These common-ruled options were not explicitly for cover, but if they apply to cover, keep them.
         // For now, I'm keeping them as they were in the previous version, assuming `coverPrintingColor` might have such values.
@@ -450,11 +450,11 @@ function calculate() {
 
     // UV Costs
     if (uvType === "spot-uv-cover") {
-        uvCost = Math.max(Math.ceil(qty / 1000) * 1500, 2000);
+        uvCost = Math.max(Math.ceil(qty / 1000) * 1800, 2000);
     } else if (uvType === "raised-uv-cover") {
-        uvCost = Math.max(Math.ceil(qty / 1000) * 2200, 2700);
+        uvCost = Math.max(Math.ceil(qty / 1000) * 2300, 2700);
     } else if (uvType === "spot-uv-all-pages") {
-        uvCost = (Math.ceil(qty / 1000) * 1700) * (pages / ups * 2);
+        uvCost = (Math.ceil(qty / 1000) * 1800) * (pages / ups * 2);
     }
 
     // Foiling Costs
@@ -469,9 +469,9 @@ function calculate() {
         dripupCost = Math.max(Math.ceil(qty / 1000) * 5000, 6000);
     } else if (dripUpType === "drip-up-all-pages") {
         // Corrected formula for "dripUp on all page"
-        const baseCost = Math.ceil(qty / 1000) * 5000;
-        const pageFactor = (pages / ups * 2); // This will multiply by the number of impressions per sheet of 'ups'
-        dripupCost = Math.max(baseCost * pageFactor, 6000);
+        const baseCost = (weight * 0.75 * (qty + wastage) / 100 ) + 1000;
+        const pageFactor = ((pages + 4) / ups * 2); // This will multiply by the number of impressions per sheet of 'ups'
+        dripupCost = Math.max(baseCost * pageFactor + bindingCost , 6000);
     }
 
 
@@ -488,6 +488,37 @@ function calculate() {
     document.getElementById("uv-cost").innerText = `UV Cost: ₹ ${uvCost.toFixed(2)}`;
     document.getElementById("foiling-cost").innerText = `Foiling Cost: ₹ ${foilingCost.toFixed(2)}`;
     document.getElementById("dripup-cost").innerText = `DripUp Cost: ₹ ${dripupCost.toFixed(2)}`;
+    
+  const fields = [
+    { label: "Quantity", value: document.getElementById('qty').value },
+    { label: "book Size", value: document.getElementById('paper-size').value },
+    { label: "Inner Pages", value:document.getElementById('pages').value + " pages, " + (document.getElementById('pages').value ) /2 + " leaves" },
+    { label: "Inner GSM", value: document.getElementById('gsm').value +" GSM"},
+    { label: "Printing Type", value: document.getElementById('printing-type').value  + "-color" },
+    { label: "Inner Lamination / Varnish", value: document.getElementById('lamination').value +"--lamination"},
+    { label: "Binding Type", value: document.getElementById('binding-type').value },
+    { label: "Cover GSM", value: document.getElementById('coverGsm').value +" GSM" },
+    { label: "Cover Printing Color", value: document.getElementById('coverPrintingColor').value + "-color" },
+    { label: "Cover Lamination Type", value: document.getElementById('coverLamination').value +"-lamination" },
+    { label: "UV", value: document.getElementById('uvType').value },
+    { label: "Foiling", value: document.getElementById('foilingType').value },
+    { label: "DripUp", value: document.getElementById('dripUpType').value }
+  ];
+
+  const summaryList = document.getElementById('summary-list');
+  summaryList.innerHTML = '';
+  fields.forEach(item => {
+    if (
+      item.value &&
+      item.value !== "none" &&
+      !item.value.startsWith("--") &&
+      item.value !== "No Cover Lamination"
+    ) {
+      const li = document.createElement('li');
+      li.textContent = `${item.label}: ${item.value}`;
+      summaryList.appendChild(li);
+    }
+  });
     document.getElementById("Final-Amount").innerText = `Final-Amount: ₹ ${FinalAmt.toFixed(2)}`;
     document.getElementById("Final-Rate").innerText = `Final-Rate: ₹ ${BookletRate.toFixed(2)}`;
 }
@@ -539,4 +570,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initially hide additional process content by setting its max-height to 0 and ensure 'show' class is not present
     additionalProcessContent.style.maxHeight = "0";
     additionalProcessContent.classList.remove('show'); // Ensure it's hidden on load
+    
 });
+document.addEventListener('contextmenu', event => event.preventDefault());
+            document.onkeydown = function(e) {
+                if (e.keyCode == 123) { return false; }
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
+                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            };
