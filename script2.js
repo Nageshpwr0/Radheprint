@@ -193,6 +193,30 @@ function calculate() {
         printingCost = Math.ceil(sheetsNeededForRuled / 1000) * 2 * 150 + 450;
     }
 
+   // New conditions for "Commen rulled oneside" inner pages
+    else if (printing === "common-ruled-4+0") {
+        const sheetsNeededForRuled = (qty * pages / ups) + wastage;
+        if (size === "7.1x9.5") {
+            printingCost = Math.ceil(sheetsNeededForRuled / 1000) * 1 * 500 + 2200;
+        } else {
+            printingCost = Math.ceil(sheetsNeededForRuled / 1000) * 1 * 400 + 1600;
+        }
+    } else if (printing === "common-ruled-2+0") {
+        if (!isCommonRuledValidSize) {
+            alert("Commen rulled 2+0 is only allowed for A4, A5, A6, Letter, Half-Letter, 7.1x9.5, 7.1x4.75");
+            return;
+        }
+        const sheetsNeededForRuled = (qty * pages / ups) + wastage;
+        printingCost = Math.ceil(sheetsNeededForRuled / 1000) * 1 * 200 + 600;
+    } else if (printing === "common-ruled-1+0") {
+        if (!isCommonRuledValidSize) {
+            alert("Commen rulled 1+0 is only allowed for A4, A5, A6, Letter, Half-Letter, 7.1x9.5, 7.1x4.75");
+            return;
+        }
+        const sheetsNeededForRuled = (qty * pages / ups) + wastage;
+        printingCost = Math.ceil(sheetsNeededForRuled / 1000) * 1 * 150 + 450;
+    }
+
     // LAMINATION COST CALCULATION (INNER PAGES)
     let laminationCost = 0;
     if (lamination !== "none") {
