@@ -243,7 +243,7 @@ function calculate() {
   const k = Math.ceil(qty / 1000);
   switch (fabricationValue) {
     case "singlefold":
-      fabricationCost = k * 150;
+      fabricationCost = k * 100;
       break;
     case "multifold":
       fabricationCost = k * 150;
@@ -296,7 +296,7 @@ function calculate() {
   const k2 = Math.ceil(qty / 1000);
   switch (fabrication2Value) {
     case "singlefoldN":
-      fabricationCostN = k2 * 150;
+      fabricationCostN = k2 * 100;
       break;
     case "multifoldN":
       fabricationCostN = k2 * 150;
