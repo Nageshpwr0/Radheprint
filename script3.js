@@ -388,29 +388,38 @@ function calculate() {
   const finalRate = totalCost / qty;
 
   // --- UPDATED: Add new details to the summary ---
-  const summary = `
-<h3>Job Summary</h3>
-<p><strong>Qty:</strong> ${qty}</p>
-<p><strong>Size:</strong> ${jobWidth}" x ${jobHeight}"</p>
-<p><strong>Lamination:</strong> ${lamination}</p>
-<p><strong>GSM:</strong> ${gsm}</p>
-<p><strong>Printing:</strong> ${printingType}</p>
-<p><strong>Punching:</strong> ${punching}</p>
-<p><strong>Fabrication:</strong> ${fabrication}</p>
-<p><strong>Fabrication 2:</strong> ${fabricationN}</p>
-    <p><strong>Additional Process:</strong> ${additionalProcess}</p>
+  let summary = `<h3>Job Summary</h3>`;
+  let printingDisplay = "";
+switch (printingType.toLowerCase()) {
+  case "selfback":
+  case "doublegripper":
+  case "frontback":
+    printingDisplay = "4+4 Both Side";
+    break;
+  case "oneside":
+    printingDisplay = "4+0 Oneside";
+    break;
+  default:
+    printingDisplay = printingType;
+}
 
-<hr>
+if (qty) summary += `<p><strong>Qty:</strong> ${qty}</p>`;
+if (jobWidth && jobHeight) summary += `<p><strong>Size:</strong> ${jobWidth}" x ${jobHeight}" Open Size</p>`;
+if (lamination && lamination.toLowerCase() !== "none") summary += `<p><strong>Lamination:</strong> ${lamination}</p>`;
+if (gsm) summary += `<p><strong>GSM:</strong> ${gsm}</p>`;
+if (printingType && printingType.toLowerCase() !== "none") summary += `<p><strong>Printing:</strong>  ${printingDisplay}</p>`;
+if (punching && punching.toLowerCase() !== "none") summary += `<p><strong>Punching:</strong> ${punching}</p>`;
+if (fabrication && fabrication.toLowerCase() !== "none") summary += `<p><strong>Fabrication:</strong> ${fabrication}</p>`;
+if (fabricationN && fabricationN.toLowerCase() !== "none") summary += `<p><strong>Fabrication 2:</strong> ${fabricationN}</p>`;
+if (additionalProcess && additionalProcess.toLowerCase() !== "none") summary += `<p><strong>Additional Process:</strong> ${additionalProcess}</p>`;
+
+summary += `<hr>
 <h3>Total Cost: ₹${totalCost.toFixed(2)}</h3>
 <h3>Final Rate per Piece: ₹${finalRate.toFixed(2)}</h3>
 <hr>
-<p><strong>Best Fit:</strong> ${bestFit.ups} ups on ${
-    bestFit.sheet.width
-  }" x ${bestFit.sheet.height}"</p>
+<p><strong>Best Fit:</strong> ${bestFit.ups} ups on ${bestFit.sheet.width}" x ${bestFit.sheet.height}"</p>
 <p><strong>Total Sheets:</strong> ${totalSheets}</p>
-<p><strong>Total Paper Weight:</strong> ${totalPaperWeight.toFixed(
-    2
-  )} kg</p>
+<p><strong>Total Paper Weight:</strong> ${totalPaperWeight.toFixed(2)} kg</p>
 <p><strong>Paper Cost:</strong> ₹${paperCost.toFixed(2)}</p>
 <p><strong>Printing Cost:</strong> ₹${printingCost.toFixed(2)}</p>
 <p><strong>Lamination/Varnish Cost:</strong> ₹${lamCost.toFixed(2)}</p>
@@ -418,11 +427,15 @@ function calculate() {
 <p><strong>Punching Cost:</strong> ₹${punchCost.toFixed(2)}</p>
 <p><strong>Fabrication Cost:</strong> ₹${fabricationCost.toFixed(2)}</p>
 <p><strong>Fabrication 2 Cost:</strong> ₹${fabricationCostN.toFixed(2)}</p>
-    <p><strong>Additional Process Cost:</strong> ₹${additionalProcessCost.toFixed(
-      2
-    )}</p>
-<hr>
-`;
+<p><strong>Additional Process Cost:</strong> ₹${additionalProcessCost.toFixed(2)}</p>
+<hr>`;
 
   document.getElementById("result").innerHTML = summary;
 }
+document.addEventListener('contextmenu', event => event.preventDefault());
+            document.onkeydown = function(e) {
+                if (e.keyCode == 123) { return false; }
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
+                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+            };
