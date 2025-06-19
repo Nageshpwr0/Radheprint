@@ -19,15 +19,52 @@ function updateRate() {
   rate.value = paperType.value;
 }
 
+// GSM validation and PaperType filtering
+function filterPaperTypeOptions() {
+  // Only handle disabling paper types. No error messages here.
+  const gsmInput = document.getElementById("gsm");
+  const gsm = parseFloat(gsmInput.value);
+  const paperType = document.getElementById("paperType");
+  const invalidValues = ["75", "76", "66", "85"];
+  for (let i = 0; i < paperType.options.length; i++) {
+    let opt = paperType.options[i];
+    if (invalidValues.includes(opt.value)) {
+      opt.disabled = gsm > 120;
+    } else {
+      opt.disabled = false;
+    }
+  }
+}
+document.getElementById("gsm").addEventListener("input", filterPaperTypeOptions);
+
+// =================== MAIN CALCULATE FUNCTION ===================
 function calculate() {
-  // Use the helper for width/height
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = ""; // Clear previous errors/results
+
+  const gsmInput = document.getElementById("gsm");
+  const gsm = parseFloat(gsmInput.value);
+
+  // Only show error if clicking Calculate
+  if (gsmInput.value === "" || isNaN(gsm) || gsm < 55 || gsm > 400) {
+    resultDiv.innerHTML = "<span style='color:red;'>GSM should be between 55 and 400.</span>";
+    gsmInput.focus();
+    return;
+  }
+
+  const paperTypeValue = document.getElementById("paperType").value;
+  if (gsm > 120 && ["75", "76", "66", "85"].includes(paperTypeValue)) {
+    resultDiv.innerHTML = "<span style='color:red;'>For GSM above 120, Maplitho, A Grade Maplitho, B Grade Maplitho, and NS Maplitho are not valid paper types.</span>";
+    return;
+  }
+
+  // --- Original calculation code continues below ---
+
   const jobWidth = parseInputToInches(document.getElementById("jobWidth").value);
   const jobHeight = parseInputToInches(document.getElementById("jobHeight").value);
   const qty = parseInt(document.getElementById("qty").value);
-  const gsm = parseFloat(document.getElementById("gsm").value);
   const rate = parseFloat(document.getElementById("rate").value); // will be auto-filled from dropdown
-  const userSelectedPrintingType =
-    document.getElementById("printingType").value;
+  const userSelectedPrintingType = document.getElementById("printingType").value;
   let printingType = userSelectedPrintingType;
 
   // Get Paper Type text for summary
@@ -117,11 +154,12 @@ function calculate() {
   });
 
   if (!bestFit.sheet || bestFit.ups === 0) {
-    document.getElementById("result").innerHTML =
-      "<p>Error: Job size cannot fit on any available sheet with current bleed/gripper settings.</p>";
+    resultDiv.innerHTML =
+      "<span style='color:red;'><p>Error: Job size cannot fit on any available sheet with current bleed/gripper settings.</p></span>";
     return;
-  } // --- ALERT LOGIC ---
+  }
 
+  // --- ALERT LOGIC ---
   let idealPrintingTypeForAlert = "";
   if (bestFit.ups % 2 === 1) {
     idealPrintingTypeForAlert = "frontback";
@@ -147,6 +185,8 @@ function calculate() {
         recommendedText = "Other or OK";
         break;
     }
+    // Optional: Show a warning in the result div or as an alert
+    // resultDiv.innerHTML += `<span style='color:orange;'>Warning: You selected '${userSelectedPrintingType}', but the recommended type is '${recommendedText}'.</span>`;
     alert(
       `Warning: You selected '${userSelectedPrintingType}', but the recommended type is '${recommendedText}'.`
     );
@@ -435,7 +475,7 @@ function calculate() {
     summary += `<p><strong>Size:</strong> ${jobWidth.toFixed(2)}" x ${jobHeight.toFixed(2)}" Open Size</p>`;
   if (lamination && lamination.toLowerCase() !== "none")
     summary += `<p><strong>Lamination:</strong> ${lamination}</p>`;
-  if (gsm) summary += `<p><strong>GSM:</strong> ${gsm}`+ `-${paperTypeText}</p>` ;
+  if (gsm) summary += `<p><strong>GSM:</strong> ${gsm}` + `-${paperTypeText}</p>`;
   if (printingType && printingType.toLowerCase() !== "none")
     summary += `<p><strong>Printing:</strong>  ${printingDisplay}</p>`;
   if (punching && punching.toLowerCase() !== "none")
@@ -464,8 +504,10 @@ function calculate() {
 <p><strong>Additional Process Cost:</strong> ₹${additionalProcessCost.toFixed(2)}</p>
 <hr>`;
 
-  document.getElementById("result").innerHTML = summary;
+  resultDiv.innerHTML = summary;
 }
+
+// Disable right-click and some shortcuts (unchanged)
 document.addEventListener('contextmenu', event => event.preventDefault());
 document.onkeydown = function(e) {
   if (e.keyCode == 123) { return false; }
