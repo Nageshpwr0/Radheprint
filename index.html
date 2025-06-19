@@ -24,16 +24,29 @@
     <input type="number" id="qty">
 
     <label for="jobWidth">Job Width (inches):</label>
-    <input type="number" id="jobWidth" step="0.01">
+    <input type="text" id="jobWidth" step="0.01">
 
     <label for="jobHeight">Job Height (inches):</label>
-    <input type="number" id="jobHeight" step="0.01">
+    <input type="text" id="jobHeight" step="0.01">
 
     <label for="gsm">GSM:</label>
     <input type="number" id="gsm">
 
-    <label for="rate">Rate per KG (INR):</label>
-    <input type="number" id="rate">
+    <label for="paperType">Paper Type:</label>
+<select id="paperType" onchange="updateRate()">
+  <option value="78">Art-paper</option>
+  <option value="78">Art-Card</option>
+  <option value="76">Woodfree</option>
+  <option value="75">Maplitho</option>
+  <option value="66">AquaShah</option>
+  <option value="85">NS Maplitho</option>
+  <option value="82">Art-Card-Board</option>
+</select>
+
+<label for="rate">Rate per Kg:</label>
+<input type="number" id="rate" step="0.01" />
+
+   
 
     <label for="printingType">Printing Type:</label>
     <select id="printingType">
@@ -73,7 +86,7 @@
     <label for="punching">Punching:</label>
     <select id="punching">
   <option value="none">None</option>
-  <option value="Yes">Yes</option>
+  <option value="yes">Yes</option>
 </select>
 
     <label for="fabrication">Fabrication:</label>
