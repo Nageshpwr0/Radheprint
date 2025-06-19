@@ -1,12 +1,39 @@
+// Helper: parse inches and mm for jobWidth/jobHeight
+function parseInputToInches(input) {
+  input = input.trim().toLowerCase();
+  if (input.endsWith('mm')) {
+    let mmValue = parseFloat(input.replace('mm', ''));
+    if (!isNaN(mmValue)) {
+      return mmValue / 25.4; // convert mm to inches
+    }
+  }
+  // Default: treat as inches
+  let inchValue = parseFloat(input);
+  return isNaN(inchValue) ? 0 : inchValue;
+}
+
+// Auto-set rate when paper type changes
+function updateRate() {
+  var paperType = document.getElementById("paperType");
+  var rate = document.getElementById("rate");
+  rate.value = paperType.value;
+}
+
 function calculate() {
-  const jobWidth = parseFloat(document.getElementById("jobWidth").value);
-  const jobHeight = parseFloat(document.getElementById("jobHeight").value);
+  // Use the helper for width/height
+  const jobWidth = parseInputToInches(document.getElementById("jobWidth").value);
+  const jobHeight = parseInputToInches(document.getElementById("jobHeight").value);
   const qty = parseInt(document.getElementById("qty").value);
   const gsm = parseFloat(document.getElementById("gsm").value);
-  const rate = parseFloat(document.getElementById("rate").value);
+  const rate = parseFloat(document.getElementById("rate").value); // will be auto-filled from dropdown
   const userSelectedPrintingType =
     document.getElementById("printingType").value;
   let printingType = userSelectedPrintingType;
+
+  // Get Paper Type text for summary
+  const paperTypeText = document.getElementById("paperType").options[
+    document.getElementById("paperType").selectedIndex
+  ].text;
 
   const lamination =
     document.getElementById("lamination").options[
@@ -390,30 +417,37 @@ function calculate() {
   // --- UPDATED: Add new details to the summary ---
   let summary = `<h3>Job Summary</h3>`;
   let printingDisplay = "";
-switch (printingType.toLowerCase()) {
-  case "selfback":
-  case "doublegripper":
-  case "frontback":
-    printingDisplay = "4+4 Both Side";
-    break;
-  case "oneside":
-    printingDisplay = "4+0 Oneside";
-    break;
-  default:
-    printingDisplay = printingType;
-}
+  switch (printingType.toLowerCase()) {
+    case "selfback":
+    case "doublegripper":
+    case "frontback":
+      printingDisplay = "4+4 Both Side";
+      break;
+    case "oneside":
+      printingDisplay = "4+0 Oneside";
+      break;
+    default:
+      printingDisplay = printingType;
+  }
 
-if (qty) summary += `<p><strong>Qty:</strong> ${qty}</p>`;
-if (jobWidth && jobHeight) summary += `<p><strong>Size:</strong> ${jobWidth}" x ${jobHeight}" Open Size</p>`;
-if (lamination && lamination.toLowerCase() !== "none") summary += `<p><strong>Lamination:</strong> ${lamination}</p>`;
-if (gsm) summary += `<p><strong>GSM:</strong> ${gsm}</p>`;
-if (printingType && printingType.toLowerCase() !== "none") summary += `<p><strong>Printing:</strong>  ${printingDisplay}</p>`;
-if (punching && punching.toLowerCase() !== "none") summary += `<p><strong>Punching:</strong> ${punching}</p>`;
-if (fabrication && fabrication.toLowerCase() !== "none") summary += `<p><strong>Fabrication:</strong> ${fabrication}</p>`;
-if (fabricationN && fabricationN.toLowerCase() !== "none") summary += `<p><strong>Fabrication 2:</strong> ${fabricationN}</p>`;
-if (additionalProcess && additionalProcess.toLowerCase() !== "none") summary += `<p><strong>Additional Process:</strong> ${additionalProcess}</p>`;
+  if (qty) summary += `<p><strong>Qty:</strong> ${qty}</p>`;
+  if (jobWidth && jobHeight)
+    summary += `<p><strong>Size:</strong> ${jobWidth.toFixed(2)}" x ${jobHeight.toFixed(2)}" Open Size</p>`;
+  if (lamination && lamination.toLowerCase() !== "none")
+    summary += `<p><strong>Lamination:</strong> ${lamination}</p>`;
+  if (gsm) summary += `<p><strong>GSM:</strong> ${gsm}`+ `-${paperTypeText}</p>` ;
+  if (printingType && printingType.toLowerCase() !== "none")
+    summary += `<p><strong>Printing:</strong>  ${printingDisplay}</p>`;
+  if (punching && punching.toLowerCase() !== "none")
+    summary += `<p><strong>Punching:</strong> ${punching}</p>`;
+  if (fabrication && fabrication.toLowerCase() !== "none")
+    summary += `<p><strong>Fabrication:</strong> ${fabrication}</p>`;
+  if (fabricationN && fabricationN.toLowerCase() !== "none")
+    summary += `<p><strong>Fabrication 2:</strong> ${fabricationN}</p>`;
+  if (additionalProcess && additionalProcess.toLowerCase() !== "none")
+    summary += `<p><strong>Additional Process:</strong> ${additionalProcess}</p>`;
 
-summary += `<hr>
+  summary += `<hr>
 <h3>Total Cost: ₹${totalCost.toFixed(2)}</h3>
 <h3>Final Rate per Piece: ₹${finalRate.toFixed(2)}</h3>
 <hr>
@@ -433,9 +467,9 @@ summary += `<hr>
   document.getElementById("result").innerHTML = summary;
 }
 document.addEventListener('contextmenu', event => event.preventDefault());
-            document.onkeydown = function(e) {
-                if (e.keyCode == 123) { return false; }
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
-                if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
-                if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
-            };
+document.onkeydown = function(e) {
+  if (e.keyCode == 123) { return false; }
+  if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+  if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
+  if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+};
