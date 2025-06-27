@@ -8,14 +8,15 @@
 </head>
 <body>
   <nav class="w-full text-white py-3 px-6 shadow-md fixed top-0 left-0 z-50 bg-white">
-  <div class="max-w-7xl mx-auto flex justify-start space-x-4">
-    <a class="nav-item" href="index2.html">Booklet</a>
-    <a class="nav-item" href="index.html">Cut to Sheet</a>
-    <a class="nav-item" href="kappabox.html">Kappa Box</a>
-    <a class="nav-item" href="index3.html">Bag</a>
-    <a class="nav-item" href="ENVELOPE.html">Envelope</a>
-  </div>
-  <div class="container">
+    <div class="max-w-7xl mx-auto flex justify-start space-x-4">
+      <a class="nav-item" href="index2.html">Booklet</a>
+      <a class="nav-item" href="index.html">Cut to Sheet</a>
+      <a class="nav-item" href="kappabox.html">Kappa Box</a>
+      <a class="nav-item" href="index3.html">Bag</a>
+      <a class="nav-item" href="ENVELOPE.html">Envelope</a>
+    </div>
+  </nav>
+  <div class="container" style="margin-top:60px;">
     <img src="4.png.png" width="190" height="100px">
     <h2>Booklet Estimator4</h2>
     <div class="form-layout">
@@ -23,7 +24,6 @@
         <label for="qty">Quantity:</label>
         <input type="number" id="qty" />
       </div>
-      <!-- Paper Type and Rate -->
       <div class="form-group">
         <label for="paperType">Paper Type:</label>
         <select id="paperType" onchange="updatePaperRate()">
@@ -39,9 +39,9 @@
         </select>
       </div>
       <div class="form-group">
-  <label for="rate">Paper Rate (per kg):</label>
-  <input type="number" id="rate" />
-</div>
+        <label for="rate">Paper Rate (per kg):</label>
+        <input type="number" id="rate" />
+      </div>
       <div class="form-group">
         <label for="paper-size">Paper Size:</label>
         <select id="paper-size">
@@ -173,31 +173,51 @@
       <button onclick="calculate()">Calculate</button>
     </div>
     <hr>
+
+    <!-- SUMMARY TABLE -->
     <div id="summary-section">
-      <h3>Summary of Your Inputs</h3>
-      <ul id="summary-list"></ul>
-      <strong>
-        <p id="Final-Amount"></p>
-        <p id="Final-Rate"></p>
-      </strong>
+      <h3 style="text-align: left;">quotation as per below detail, valid 4-5 days</h3>
+      <table id="summary-table" border="1" style="width:50%;text-align:left;">
+        
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS will fill this dynamically -->
+        </tbody>
+       <tr><td><strong>Amount</strong></td><td id=  "Final-Amount"></td></tr>
+        <tr><td><strong>Final Rate</strong></td><td id="Final-Rate"></td></tr></strong>
+      </table>
     </div>
-    <h3>Results</h3>
-    <p id="paper-cost"></p>
-    <p id="cover-paper-cost"></p>
-    <p id="printing-cost"></p>
-    <p id="cover-printing-cost"></p>
-    <p id="lamination-cost"></p>
-    <p id="cover-lamination-cost"></p>
-    <p id="binding-cost"></p>
-    <p id="uv-cost"></p>
-    <p id="foiling-cost"></p>
-    <p id="dripup-cost"></p>
-    <strong>
-      <p id="Final-Amount"></p>
-    </strong>
-    <strong>
-      <p id="Final-Rate"></p>
-    </strong>
+
+    <!-- RESULTS TABLE -->
+    <h3 style="text-align: left;">Thank You </h3>
+    <table id="results-table" border="1" style="width:50%;text-align:left;">
+      <thead>
+        
+        <tr>
+          <th>Item</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Paper Cost</td><td id="paper-cost"></td></tr>
+        <tr><td>Cover Paper Cost</td><td id="cover-paper-cost"></td></tr>
+        <tr><td>Printing Cost</td><td id="printing-cost"></td></tr>
+        <tr><td>Cover Printing Cost</td><td id="cover-printing-cost"></td></tr>
+        <tr><td>Lamination Cost</td><td id="lamination-cost"></td></tr>
+        <tr><td>Cover Lamination Cost</td><td id="cover-lamination-cost"></td></tr>
+        <tr><td>Binding Cost</td><td id="binding-cost"></td></tr>
+        <tr><td>Uv Cost</td><td id="uv-cost"></td></tr>
+        <tr><td>Foiling Cost</td><td id="foiling-cost"></td></tr>
+        <tr><td>Dripup Cost</td><td id="dripup-cost"></td></tr>
+        
+        
+      </tbody>
+    </table>
   </div>
   <script src="script2.js"></script>
 </body>
