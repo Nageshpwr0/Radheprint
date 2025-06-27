@@ -124,7 +124,7 @@
       </div>
     </div>
     <button onclick="calculateCost()"
-      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400">
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200">
       Calculate Total Cost
     </button>
     <div id="result" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-inner text-gray-800 text-sm leading-relaxed">
@@ -361,6 +361,7 @@
         </div>
       `;
     }
+
     document.addEventListener('DOMContentLoaded', () => {
       const gummingCheckbox = document.getElementById('gummingFlap');
       const windowCheckbox = document.getElementById('window');
@@ -381,6 +382,26 @@
       windowCheckbox.addEventListener('change', () => applyToggleStyles(windowCheckbox));
       applyToggleStyles(gummingCheckbox);
       applyToggleStyles(windowCheckbox);
+
+      // --------- NEW LOGIC FOR PAPER TYPE / MAKING TYPE ---------
+      const paperTypeSelect = document.getElementById('paperType');
+      const makingTypeSelect = document.getElementById('makingType');
+      const directOption = makingTypeSelect.querySelector('option[value="direct"]');
+
+      function updateMakingTypeOptions() {
+        const selectedPaper = paperTypeSelect.value;
+        if (selectedPaper === 'Artcard' || selectedPaper === 'Artpaper') {
+          directOption.disabled = true;
+          if (makingTypeSelect.value === 'direct') {
+            makingTypeSelect.value = 'punching';
+          }
+        } else {
+          directOption.disabled = false;
+        }
+      }
+      paperTypeSelect.addEventListener('change', updateMakingTypeOptions);
+      updateMakingTypeOptions();
+      // ---------------------------------------------------------
     });
   </script>
 </body>
