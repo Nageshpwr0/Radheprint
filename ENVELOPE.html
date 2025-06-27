@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Envelope Quotation</title>
+  <!-- Tailwind CSS CDN for modern styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles and overrides */
+    body {
+      font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+    }
+    /* Hide default checkbox */
+    .toggle-switch input[type="checkbox"] {
+      opacity: 0;
+      width: 0;
+  	  height: 0;
+    }
+    /* Style the toggle slider */
+    .toggle-switch .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+a { padding: 5px 15px 5px;
+      background-color: #004494;
+      color: whitesmoke;
+      text-decoration:  none;
+      margin: 10px;
+      border-radius: 5px;
+ }
+    .toggle-switch .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    .toggle-switch input:checked + .slider {
+      background-color: #2196F3; /* Blue when checked */
+    }
+    .toggle-switch input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    /* Ensure the dot moves with the background on check */
+    .toggle-switch input:checked ~ .dot {
+        transform: translateX(26px);
+    }
+  </style>
+
+</head>
+ <nav class="w-full text-white py-3 px-6 shadow-md fixed top-0 left-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-start space-x-4">
+    <a class="nav-item" href="index2.html">Booklet</a>
+    <a class="nav-item" href="index.html">Cut to Sheet</a>
+    <a class="nav-item" href="kappabox.html">Kappa Box</a>
+    <a class="nav-item" href="index3.html">Bag</a>
+    <a class="nav-item" href="ENVELOPE.html">Envelope</a>
+  </div>
+</nav>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-xl"> <!-- Changed max-w-lg to max-w-xl -->
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">Envelope Quotation Generator</h2>
+
+    <!-- Quantity - Moved to the top -->
+    <div class="mb-6">
+        <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+        <input type="number" id="quantity"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+        <!-- Standard Size & Envelope Type - Side by Side -->
+        <div>
+            <label for="standardSize" class="block text-sm font-medium text-gray-700 mb-1">Standard Size</label>
+            <select id="standardSize" onchange="applyStandardSize()"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="">-- Select Standard Size --</option>
+                <option value="A4Center">A4 Center Pasting</option>
+                <option value="ChqKotak">Chq Size Kotak</option>
+                <option value="ChqRegular">Chq Size Regular</option>
+                <option value="NineFiveKotak">9.5x4.5 Kotak</option>
+                <option value="NineFiveCenter">9.5x4.5 Center Pasting</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="envelopeType" class="block text-sm font-medium text-gray-700 mb-1">Envelope Type</label>
+            <select id="envelopeType"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="kotak">Kotak</option>
+                <option value="centerPasting">Center Pasting</option>
+            </select>
+        </div>
+
+        <!-- Width & Height - Side by Side -->
+        <div>
+            <label for="width" class="block text-sm font-medium text-gray-700 mb-1">Width (inches)</label>
+            <input type="number" id="width" step="0.01"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+        </div>
+
+        <div>
+            <label for="height" class="block text-sm font-medium text-gray-700 mb-1">Height (inches)</label>
+            <input type="number" id="height" step="0.01"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+        </div>
+
+        <!-- GSM & Paper Type - Side by Side -->
+        <div>
+            <label for="gsm" class="block text-sm font-medium text-gray-700 mb-1">GSM</label>
+            <input type="number" id="gsm"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+        </div>
+
+        <div>
+            <label for="paperType" class="block text-sm font-medium text-gray-700 mb-1">Paper Type</label>
+            <select id="paperType"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="Allabaster">Allabaster</option>
+                <option value="Maplitho">Maplitho</option>
+                <option value="AGradeMaplitho">A Grade Maplitho</option>
+                <option value="BGrade">B Grade</option>
+                <option value="Artpaper">Artpaper</option>
+                <option value="Artcard">Artcard</option>
+            </select>
+        </div>
+
+        <!-- Making Type & Die Type - Already Side by Side -->
+        <div>
+            <label for="makingType" class="block text-sm font-medium text-gray-700 mb-1">Making Type</label>
+            <select id="makingType"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="punching">Punching & Pasting</option>
+                <option value="direct">Direct Pasting</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="dieType" class="block text-sm font-medium text-gray-700 mb-1">Die Type</label>
+            <select id="dieType"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <option value="old">Old</option>
+                <option value="new">New (as per Artwork)</option>
+            </select>
+        </div>
+
+        <!-- Custom Toggle Switches -->
+        <div class="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center justify-around space-y-4 sm:space-y-0 sm:space-x-4 mt-4">
+            <label for="gummingFlap" class="flex items-center cursor-pointer">
+                <div class="relative toggle-switch">
+                    <input type="checkbox" id="gummingFlap" class="sr-only peer" />
+                    <div class="block bg-gray-300 w-14 h-8 rounded-full"></div>
+                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                </div>
+                <span class="ml-3 text-gray-700 font-medium">Add Gumming Flap</span>
+            </label>
+
+            <label for="window" class="flex items-center cursor-pointer">
+                <div class="relative toggle-switch">
+                    <input type="checkbox" id="window" class="sr-only peer" />
+                    <div class="block bg-gray-300 w-14 h-8 rounded-full"></div>
+                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                </div>
+                <span class="ml-3 text-gray-700 font-medium">Add Window</span>
+            </label>
+        </div>
+
+    </div>
+
+    <button onclick="calculateCost()"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 mt-6">
+      Calculate Total Cost
+    </button>
+
+    <div id="result" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-lg shadow-inner text-gray-800 text-sm leading-relaxed">
+      <p class="text-center text-gray-500">Enter details and click "Calculate Total Cost" to see results.</p>
+    </div>
+
+  <script>
+    const standardSizes = {
+      A4Center: { width: 12, height: 9.7, type: "centerPasting" },
+      ChqKotak: { width: 9.25, height: 4.25, type: "kotak" },
+      ChqRegular: { width: 9.25, height: 4.25, type: "centerPasting" },
+      NineFiveKotak: { width: 9.5, height: 4.5, type: "kotak" },
+      NineFiveCenter: { width: 9.5, height: 4.5, type: "centerPasting" }
+    };
+
+    const paperRates = {
+      Allabaster: 80,
+      Maplitho: 75,
+      AGradeMaplitho: 76,
+      BGrade: 66,
+      Artpaper: 78,
+      Artcard: 78
+    };
+
+    const fullSheets = [
+      { name: "18x25", w: 18, h: 25 },
+      { name: "18x23", w: 18, h: 23 },
+      { name: "15x20", w: 15, h: 20 },
+      { name: "20x30", w: 20, h: 30 },
+      { name: "15x25", w: 15, h: 25 },
+      { name: "12x23", w: 12, h: 23 },
+      { name: "12x25", w: 12, h: 25 },
+      { name: "19x25", w: 19, h: 25 }
+    ];
+
+    // Function to apply standard size dimensions
+    function applyStandardSize() {
+      const selected = document.getElementById("standardSize").value;
+      if (standardSizes[selected]) {
+        const { width, height, type } = standardSizes[selected];
+        document.getElementById("width").value = width;
+        document.getElementById("height").value = height;
+        document.getElementById("envelopeType").value = type;
+      }
+    }
+
+    // Main function to calculate the cost
+    function calculateCost() {
+      // Get input values
+      const width = parseFloat(document.getElementById("width").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const type = document.getElementById("envelopeType").value;
+      const gsm = parseFloat(document.getElementById("gsm").value);
+      const qty = parseInt(document.getElementById("quantity").value);
+      const paperType = document.getElementById("paperType").value;
+      const ratePerKg = paperRates[paperType];
+      const makingType = document.getElementById("makingType").value;
+      const dieType = document.getElementById("dieType").value;
+      const addGumming = document.getElementById("gummingFlap").checked;
+      const addWindow = document.getElementById("window").checked;
+
+      // Basic input validation
+      if (isNaN(width) || isNaN(height) || isNaN(gsm) || isNaN(qty) || !ratePerKg) {
+        document.getElementById("result").innerHTML = `<span class="text-red-600 font-semibold">Please fill all fields correctly with valid numbers.</span>`;
+        return;
+      }
+
+      // Calculate open envelope dimensions based on type
+      let openW = type === "kotak" ? width + 1 : Math.min(1, width * 0.15) + width + 0.5;
+      let openH = type === "kotak" ? Math.min(1.25, height * 0.2) + height + (height * 0.9) : height * 2 + 0.5;
+
+      let bestFit = null;
+      let fitCandidates = []; // Store all valid fit options for later sorting
+
+      // Iterate through all full sheet sizes and their orientations to find the best fit
+      fullSheets.forEach(sheet => {
+        // Test both original and rotated orientations of the full sheet
+        [
+          { sw: sheet.w, sh: sheet.h }, // Original orientation
+          { sw: sheet.h, sh: sheet.w }  // Rotated orientation
+        ].forEach(orient => {
+          // Calculate usable area by subtracting margins for gripper/trim
+          let usableW = orient.sw - 0.8;
+          let usableH = orient.sh - 0.3;
+
+          // Determine how many envelopes fit horizontally and vertically
+          let fitW = Math.floor(usableW / openW);
+          let fitH = Math.floor(usableH / openH);
+          let ups = fitW * fitH; // Units Per Sheet (total envelopes from one full sheet)
+
+          // Calculate areas and wastage for this fit
+          let usedArea = ups * (openW * openH);
+          let usableArea = usableW * usableH;
+          let wastage = usableArea - usedArea; // Wastage from the usable area
+
+          // If at least one envelope fits, add it to candidates
+          if (ups > 0) {
+            fitCandidates.push({
+              name: sheet.name,
+              ups,
+              wastage,
+              usedArea,
+              usableArea,
+              sheetArea: sheet.w * sheet.h,
+              originalSheet: sheet,
+              appliedOrientation: orient
+            });
+          }
+        });
+      });
+
+      // Sort candidates by lowest wastage first
+      fitCandidates.sort((a, b) => a.wastage - b.wastage);
+
+      // Select the best fit based on lowest wastage
+      if (fitCandidates.length > 0) {
+        bestFit = fitCandidates[0];
+      }
+
+      // --- NEW FEATURE: Override for 9.25x4.25 and Quantity > 20000 ---
+      // If quantity is high for a specific size, override best fit to 19x25 (for efficiency in production runs)
+      if (qty > 20000 && (width === 9.25 && height === 4.25)) {
+        const nineteenXTwentyFiveSheet = fullSheets.find(s => s.name === "19x25");
+        if (nineteenXTwentyFiveSheet) {
+          let best19x25FitForEnvelope = null;
+
+          // Recalculate UPS and wastage specifically for 19x25 for the current open envelope size
+          [
+            { sw: nineteenXTwentyFiveSheet.w, sh: nineteenXTwentyFiveSheet.h },
+            { sw: nineteenXTwentyFiveSheet.h, sh: nineteenXTwentyFiveSheet.w }
+          ].forEach(orient => {
+            let usableW = orient.sw - 0.8;
+            let usableH = orient.sh - 0.3;
+            let fitW = Math.floor(usableW / openW);
+            let fitH = Math.floor(usableH / openH);
+            let ups = fitW * fitH;
+            let usedArea = ups * (openW * openH);
+            let usableArea = usableW * usableH;
+            let wastage = usableArea - usedArea;
+
+            if (ups > 0) {
+              // For the override, pick the orientation of 19x25 that offers more UPS
+              if (!best19x25FitForEnvelope || ups > best19x25FitForEnvelope.ups) {
+                best19x25FitForEnvelope = {
+                  name: nineteenXTwentyFiveSheet.name,
+                  ups,
+                  wastage,
+                  usedArea,
+                  usableArea,
+                  sheetArea: nineteenXTwentyFiveSheet.w * nineteenXTwentyFiveSheet.h
+                };
+              }
+            }
+          });
+          if (best19x25FitForEnvelope) {
+            bestFit = best19x25FitForEnvelope; // Apply the override
+          }
+        }
+      }
+      // --- END OF QUANTITY OVERRIDE CONDITION ---
+
+      // Handle case where no sheet fits
+      if (!bestFit) {
+        document.getElementById("result").innerHTML = `<span class="text-red-600 font-semibold">Envelope too large to fit efficiently on any available sheet.</span>`;
+        return;
+      }
+
+      // Calculate total sheets including wastage sheets based on quantity
+      const sheetArea = bestFit.sheetArea;
+      const wastageSheets = qty > 10000 ? Math.ceil(qty / bestFit.ups * 0.03) :
+                           qty > 6000 ? 300 :
+                           qty > 4000 ? 225 :
+                           qty > 2000 ? 150 : 100;
+      const totalSheets = Math.ceil(qty / bestFit.ups) + wastageSheets;
+
+      // Calculate paper cost
+      const paperCostPerSheet = (sheetArea * gsm * ratePerKg) / 3100 / 500;
+      const paperCost = paperCostPerSheet * totalSheets;
+
+      // Calculate printing cost
+      const totalImpressions = Math.ceil((qty / bestFit.ups + wastageSheets) / 1000);
+      const printingCost = bestFit.name === "20x30"
+        ? totalImpressions * 500 + 2200
+        : totalImpressions * 400 + 1700;
+
+      // Calculate making cost with paper type overrides
+      let makingRate;
+      if (makingType === "direct") {
+        makingRate = qty > 30000 ? 250 : qty > 10000 ? 300 : 400;
+      } else { // Default to "punching" or other
+        makingRate = 800;
+      }
+
+      if (paperType === "Artpaper") {
+        makingRate = 900;
+      } else if (paperType === "Artcard") {
+        makingRate = 1200; // Updated rate for Artcard
+      }
+      const makingCost = makingRate * Math.ceil(qty / 1000);
+
+      // Calculate die cost
+      const dieCost = dieType === "old"
+        ? 300
+        : ["12x23", "12x25", "15x20"].includes(bestFit.name)
+          ? 1500
+          : 2000;
+
+      // Calculate gumming and window costs
+      let gummingRate = qty > 20000 ? 150 : qty > 10000 ? 200 : qty > 5000 ? 250 : 300;
+      let gummingCost = addGumming ? gummingRate * Math.ceil(qty / 1000) : 0;
+
+      let windowRate = qty > 20000 ? 80 : qty > 10000 ? 120 : qty > 5000 ? 150 : 200;
+      let windowCost = addWindow ? windowRate * Math.ceil(qty / 1000) : 0;
+
+      // Calculate total cost and final rate per envelope
+      const totalCost = paperCost + printingCost + makingCost + dieCost + gummingCost + windowCost;
+      const finalRate = totalCost / qty;
+
+      // Display results
+      document.getElementById("result").innerHTML = `
+        <h3 class="text-xl font-bold text-gray-800 mb-4">Quotation Summary</h3>
+        <div>
+          <div >Envelope Type:${type}</div>
+          <div >Size:${width} × ${height} in</div>
+          <div >GSM:${gsm}</div>
+          <div >Paper:${paperType}</div>
+          <div >Making:${makingType}</div>
+          <div >Die:${dieType}</div>
+          <div >Quantity:${qty}</div>
+          <div >Gumming Flap:${addGumming ? "Yes" : "No"}</div>
+          <div >Window:${addWindow ? "Yes" : "No"}</div>
+        </div>
+        <hr class="my-4 border-gray-300">
+        <div class="text-lg font-bold text-gray-900 flex justify-between items-center mb-2">
+          <span>Total Estimated Cost:</span> <span class="text-blue-600">₹${totalCost.toFixed(2)}</span>
+        </div>
+        <div class="text-lg font-bold text-gray-900 flex justify-between items-center">
+          <span>Final Rate per Envelope:</span> <span class="text-blue-600">₹${finalRate.toFixed(2)}</span>
+        </div>
+        <hr class="my-4 border-gray-300">
+        <h4 class="text-md font-semibold text-gray-800 mb-2">Production Details:</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-gray-700 text-sm">
+          <span class="font-medium">Open Size:</span> <span>${openW.toFixed(2)} × ${openH.toFixed(2)} in</span>
+          <span class="font-medium">Best Sheet:</span> <span>${bestFit.name}</span>
+          <span class="font-medium">UPS (Units Per Sheet):</span> <span>${bestFit.ups}</span>
+          <span class="font-medium">Wastage Area:</span> <span>${bestFit.wastage.toFixed(2)} sq.in (${(bestFit.wastage / bestFit.usableArea * 100).toFixed(1)}%)</span>
+          <span class="font-medium">Wastage Sheets:</span> <span>${wastageSheets}</span>
+          <span class="font-medium">Total Sheets Required:</span> <span>${totalSheets}</span>
+        </div>
+        <h4 class="text-md font-semibold text-gray-800 mt-4 mb-2">Cost Breakup:</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-gray-700 text-sm">
+          <span class="font-medium">Paper Cost:</span> <span>₹${paperCost.toFixed(2)}</span>
+          <span class="font-medium">Printing Cost:</span> <span>₹${printingCost.toFixed(2)}</span>
+          <span class="font-medium">Making Cost:</span> <span>₹${makingCost.toFixed(2)}</span>
+          <span class="font-medium">Die Cost:</span> <span>₹${dieCost}</span>
+          <span class="font-medium">Gumming Flap Cost:</span> <span>₹${gummingCost.toFixed(2)}</span>
+          <span class="font-medium">Window Cost:</span> <span>₹${windowCost.toFixed(2)}</span>
+        </div>
+      `;
+    }
+
+    // JavaScript to handle the custom toggle switch behavior
+    document.addEventListener('DOMContentLoaded', () => {
+      const gummingCheckbox = document.getElementById('gummingFlap');
+      const windowCheckbox = document.getElementById('window');
+
+      const applyToggleStyles = (checkbox) => {
+        const slider = checkbox.nextElementSibling; // Get the .block div
+        const dot = slider.nextElementSibling; // Get the .dot div
+
+        if (checkbox.checked) {
+          slider.classList.add('bg-blue-600');
+          slider.classList.remove('bg-gray-300');
+          dot.style.transform = 'translateX(26px)';
+        } else {
+          slider.classList.add('bg-gray-300');
+          slider.classList.remove('bg-blue-600');
+          dot.style.transform = 'translateX(0)';
+        }
+      };
+
+      gummingCheckbox.addEventListener('change', () => applyToggleStyles(gummingCheckbox));
+      windowCheckbox.addEventListener('change', () => applyToggleStyles(windowCheckbox));
+
+      // Apply initial styles in case of pre-checked boxes (though none are by default here)
+      applyToggleStyles(gummingCheckbox);
+      applyToggleStyles(windowCheckbox);
+    });
+  </script>
+</body>
+</html>
