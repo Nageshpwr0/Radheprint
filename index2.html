@@ -1,43 +1,43 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-   
   <meta charset="UTF-8" />
-
-   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title id="bookletTitle">Booklet Estimator4</title>
-
-   
+  <title id="bookletTitle">Booklet Estimator4</title>
   <link rel="stylesheet" href="style2.css">
-
 </head>
-
 <body>
-
-    <div class="container">
-    <img src="4.png.png" width="190 " height="100px">
-    <h2>Booklet Estimator4</h2> 
+  <div class="container">
+    <img src="4.png.png" width="190" height="100px">
+    <h2>Booklet Estimator4</h2>
     <a href="index.html">CUT TO SHEET</a>
-        <a href="index3.html">BAG</a>
-        <a href="kappabox.html">KAPPA BOX</a>
-    
+    <a href="index3.html">BAG</a>
+    <a href="kappabox.html">KAPPA BOX</a>
     <div class="form-layout">
       <div class="form-group">
         <label for="qty">Quantity:</label>
         <input type="number" id="qty" />
-        
-        
       </div>
-
-
-
-            <div class="form-group">
+      <!-- Paper Type and Rate -->
+      <div class="form-group">
+        <label for="paperType">Paper Type:</label>
+        <select id="paperType" onchange="updatePaperRate()">
+          <option value="">-- Select Paper Type --</option>
+          <option value="Artpaper">Artpaper</option>
+          <option value="ArtCard">ArtCard</option>
+          <option value="A Maplitho">A Maplitho</option>
+          <option value="B Maplitho">B Maplitho</option>
+          <option value="Maplitho">Maplitho</option>
+          <option value="Shunshine">Shunshine</option>
+          <option value="NS maplitho">NS maplitho</option>
+          <option value="Texture Paper">Texture Paper</option>
+        </select>
+      </div>
+      <div class="form-group">
+  <label for="rate">Paper Rate (per kg):</label>
+  <input type="number" id="rate" />
+</div>
+      <div class="form-group">
         <label for="paper-size">Paper Size:</label>
         <select id="paper-size">
           <option value="" disabled selected>-- Select Size --</option>
@@ -45,8 +45,7 @@
           <option value="A5" data-weight="450" data-ups="16" data-imp="400" data-makrdy="1900">A5</option>
           <option value="A6" data-weight="450" data-ups="32" data-imp="400" data-makrdy="1900">A6</option>
           <option value="Letter" data-weight="414" data-ups="8" data-imp="400" data-makrdy="1900">Letter</option>
-          <option value="Half-Letter" data-weight="414" data-ups="16" data-imp="400" data-makrdy="1900">Half-Letter
-          </option>
+          <option value="Half-Letter" data-weight="414" data-ups="16" data-imp="400" data-makrdy="1900">Half-Letter</option>
           <option value="7.1x9.5" data-weight="600" data-ups="16" data-imp="500" data-makrdy="2700">7.1x9.5</option>
           <option value="7.1x4.75" data-weight="600" data-ups="32" data-imp="500" data-makrdy="2700">7.1x4.75</option>
           <option value="9.5x13.5" data-weight="600" data-ups="8" data-imp="500" data-makrdy="2700">9.5x13.5</option>
@@ -62,10 +61,6 @@
         <input type="number" id="pages" />
       </div>
       <div class="form-group">
-        <label for="rate">Paper Rate (per kg):</label>
-        <input type="number" id="rate" value="78" />
-      </div>
-      <div class="form-group">
         <label for="gsm">GSM:</label>
         <input type="number" id="gsm" />
       </div>
@@ -73,7 +68,7 @@
         <label for="printing-type">Printing Type:</label>
         <select id="printing-type">
           <option value="" disabled selected>-- Select Printing Type --</option>
-          <option value="multi"selected>Multi-Color</option>
+          <option value="multi" selected>Multi-Color</option>
           <option value="single">Single Color</option>
           <option value="2+2">2+2 Color</option>
           <option value="common-ruled-4+4">Commen or rulled 4+4</option>
@@ -84,34 +79,30 @@
           <option value="common-ruled-1+0">Commen or rulled 1+0</option>
         </select>
       </div>
-
       <div class="form-group">
         <label for="lamination">--Lamination:--</label>
         <select id="lamination">
-          <option value="none" selected>--No Lamination--
-             
-          </option>
+          <option value="none" selected>--No Lamination--</option>
           <option value="matt-all">Matt Lamination (All Pages)</option>
           <option value="gloss-all">Gloss Lamination (All Pages)</option>
           <option value="varnish-all">Varnish (All Pages)</option>
         </select>
       </div>
-
       <div class="form-group">
-    <label for="binding-type">Binding Type:</label>
-    <select id="binding-type">
-        <option value="none" >-- Binding --</option>
-        <option value="center-pinning"selected>Center Pinning</option>
-        <option value="section-perfect">Section Binding</option>
-        <option value="perfect-binding">Perfect Binding</option>
-        <option value="loop-pinning">Loop Pinning</option>
-        <option value="wiro">WIRO</option>
-        <option value="hardbound-gally-section">Hardbound Gally Section</option>
-        <option value="top-perfect-pad">Top Perfect Pad</option> </select>
-</div>
+        <label for="binding-type">Binding Type:</label>
+        <select id="binding-type">
+          <option value="none">-- Binding --</option>
+          <option value="center-pinning" selected>Center Pinning</option>
+          <option value="section-perfect">Section Binding</option>
+          <option value="perfect-binding">Perfect Binding</option>
+          <option value="loop-pinning">Loop Pinning</option>
+          <option value="wiro">WIRO</option>
+          <option value="hardbound-gally-section">Hardbound Gally Section</option>
+          <option value="top-perfect-pad">Top Perfect Pad</option>
+        </select>
+      </div>
     </div>
     <hr>
-
     <div id="coverDetailsSection">
       <h3>Cover Details</h3>
       <div class="form-layout">
@@ -122,8 +113,8 @@
         <div class="form-group">
           <label for="coverPrintingColor">Cover Printing Color:</label>
           <select id="coverPrintingColor">
-            <option value="none" >-- Select Color --</option>
-            <option value="multi"selected>Multi-Color</option>
+            <option value="none">-- Select Color --</option>
+            <option value="multi" selected>Multi-Color</option>
             <option value="single">Single Color</option>
             <option value="2+2">2+2 Color</option>
           </select>
@@ -131,8 +122,8 @@
         <div class="form-group">
           <label for="coverLamination">Cover Lamination Type:</label>
           <select id="coverLamination">
-            <option value="none" >--Lamination--</option>
-            <option value="matt"selected>Matt Lamination</option>
+            <option value="none">--Lamination--</option>
+            <option value="matt" selected>Matt Lamination</option>
             <option value="gloss">Gloss Lamination</option>
             <option value="varnish">Varnish</option>
             <option value="thermal">Thermal Lamination</option>
@@ -141,7 +132,6 @@
         </div>
       </div>
     </div>
-
     <hr>
     <button id="toggleAdditionalProcess" class="collapsible-button">Additional Process</button>
     <div id="additionalProcessContent" class="collapsible-content">
@@ -155,7 +145,6 @@
             <option value="spot-uv-all-pages">Spot UV on All Pages</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="foilingType">Foiling:</label>
           <select id="foilingType">
@@ -164,7 +153,6 @@
             <option value="magic-gold-foil-cover">Magic Gold Foil on Cover</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="dripUpType">DripUp:</label>
           <select id="dripUpType">
@@ -179,22 +167,20 @@
     <div class="button-group">
       <button onclick="calculate()">Calculate</button>
     </div>
-
     <hr>
     <div id="summary-section">
-  <h3>Summary of Your Inputs</h3>
-  <ul id="summary-list"></ul>
-  <strong>
-    <p id="Final-Amount"></p>
-    <p id="Final-Rate"></p>
-  </strong>
-</div>
-
+      <h3>Summary of Your Inputs</h3>
+      <ul id="summary-list"></ul>
+      <strong>
+        <p id="Final-Amount"></p>
+        <p id="Final-Rate"></p>
+      </strong>
+    </div>
     <h3>Results</h3>
     <p id="paper-cost"></p>
-     <p id="cover-paper-cost"></p>
+    <p id="cover-paper-cost"></p>
     <p id="printing-cost"></p>
-     <p id="cover-printing-cost"></p>
+    <p id="cover-printing-cost"></p>
     <p id="lamination-cost"></p>
     <p id="cover-lamination-cost"></p>
     <p id="binding-cost"></p>
@@ -210,5 +196,4 @@
   </div>
   <script src="script2.js"></script>
 </body>
-
 </html>
