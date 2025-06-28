@@ -12,16 +12,8 @@ function parseInputToInches(input) {
   return isNaN(inchValue) ? 0 : inchValue;
 }
 
-// Auto-set rate when paper type changes
-function updateRate() {
-  var paperType = document.getElementById("paperType");
-  var rate = document.getElementById("rate");
-  rate.value = paperType.value;
-}
-
 // GSM validation and PaperType filtering
 function filterPaperTypeOptions() {
-  // Only handle disabling paper types. No error messages here.
   const gsmInput = document.getElementById("gsm");
   const gsm = parseFloat(gsmInput.value);
   const paperType = document.getElementById("paperType");
@@ -37,6 +29,48 @@ function filterPaperTypeOptions() {
 }
 document.getElementById("gsm").addEventListener("input", filterPaperTypeOptions);
 
+// ========== NEW: Hotmail Sticker UI/logic controls ==========
+function onPaperTypeChange() {
+  const paperType = document.getElementById("paperType").value;
+  const gsmInput = document.getElementById("gsm");
+  const printingType = document.getElementById("printingType");
+  const lamination = document.getElementById("lamination");
+  const rateRow = document.getElementById("rateRow") || document.getElementById("rate"); // assumes a wrapper row or just the input
+  if (paperType === "hotmailsticker") {
+    gsmInput.value = 80;
+    gsmInput.min = 80;
+    gsmInput.max = 90;
+    printingType.value = "oneside";
+    // Enable only oneside lamination
+    for (let i = 0; i < lamination.options.length; i++) {
+      let opt = lamination.options[i];
+      if (["none","mattos", "glossos", "varnishos", "thermattos", "velmattos"].includes(opt.value)) {
+        opt.disabled = false;
+      } else {
+        opt.disabled = true;
+      }
+    }
+    // Optionally select the first enabled oneside lamination
+    for (let i = 0; i < lamination.options.length; i++) {
+      if (!lamination.options[i].disabled) {
+        lamination.selectedIndex = i;
+        break;
+      }
+    }
+    // Hide rate per kg input/row
+    if (rateRow) rateRow.style.display = "none";
+  } else {
+    gsmInput.min = 55;
+    gsmInput.max = 400;
+    // Enable all lamination options
+    for (let i = 0; i < lamination.options.length; i++) {
+      lamination.options[i].disabled = false;
+    }
+    if (rateRow) rateRow.style.display = "";
+  }
+}
+document.getElementById("paperType").addEventListener("change", onPaperTypeChange);
+
 // =================== MAIN CALCULATE FUNCTION ===================
 function calculate() {
   const resultDiv = document.getElementById("result");
@@ -45,7 +79,6 @@ function calculate() {
   const gsmInput = document.getElementById("gsm");
   const gsm = parseFloat(gsmInput.value);
 
-  // Only show error if clicking Calculate
   if (gsmInput.value === "" || isNaN(gsm) || gsm < 55 || gsm > 400) {
     resultDiv.innerHTML = "<span style='color:red;'>GSM should be between 55 and 400.</span>";
     gsmInput.focus();
@@ -58,12 +91,10 @@ function calculate() {
     return;
   }
 
-  // --- Original calculation code continues below ---
-
   const jobWidth = parseInputToInches(document.getElementById("jobWidth").value);
   const jobHeight = parseInputToInches(document.getElementById("jobHeight").value);
   const qty = parseInt(document.getElementById("qty").value);
-  const rate = parseFloat(document.getElementById("rate").value); // will be auto-filled from dropdown
+  const rate = parseFloat(document.getElementById("rate").value);
   const userSelectedPrintingType = document.getElementById("printingType").value;
   let printingType = userSelectedPrintingType;
 
@@ -89,8 +120,6 @@ function calculate() {
       document.getElementById("fabricationN").selectedIndex
     ].text;
   const fabrication2Value = document.getElementById("fabricationN").value;
-
-  // --- NEW: Read values from the new dropdown ---
   const additionalProcess =
     document.getElementById("additionalProcess").options[
       document.getElementById("additionalProcess").selectedIndex
@@ -98,18 +127,37 @@ function calculate() {
   const additionalProcessValue =
     document.getElementById("additionalProcess").value;
 
-  const fullSheets = [
-    { width: 18, height: 25 },
-    { width: 18, height: 23 },
-    { width: 15, height: 20 },
-    { width: 12, height: 23 },
-    { width: 15, height: 25 },
-    { width: 12, height: 25 },
-    { width: 19, height: 25 },
-    { width: 20, height: 29.5 },
-    { width: 13, height: 26 },
-    { width: 14, height: 26 },
-  ];
+  // Only allow best fit sheets for Hotmail Sticker
+  let fullSheets;
+  if (paperTypeValue === "hotmailsticker") {
+    fullSheets = [
+      { width: 18, height: 25 },
+      { width: 18, height: 23 },
+      { width: 15, height: 20 },
+      { width: 20, height: 30 }
+    ];
+  } else {
+    fullSheets = [
+      { width: 18, height: 25 },
+      { width: 18, height: 23 },
+      { width: 15, height: 20 },
+      { width: 20, height: 30 },
+      { width: 12, height: 23 },
+      { width: 15, height: 25 },
+      { width: 12, height: 25 },
+      { width: 19, height: 25 },
+      { width: 20, height: 29.5 },
+      { width: 13, height: 26 },
+      { width: 14, height: 26 }
+    ];
+  }
+
+  const hotmailStickerRates = {
+    "18x25": 8.5,
+    "18x23": 8,
+    "15x20": 6,
+    "20x30": 12
+  };
 
   const bleed = 0.1378; // 3.5mm in inches
   const gripper = 0.7; // inches
@@ -117,7 +165,7 @@ function calculate() {
   const adjustedWidth = jobWidth + bleed;
   const adjustedHeight = jobHeight + bleed;
 
-  let bestFit = { ups: 0, sheet: null, totalWastageArea: Infinity };
+  let bestFit = { ups: 0, sheet: null, totalWastageArea: Infinity, fitW2: 0, fitH2: 0 };
 
   const totalJobAreaRequired = qty * adjustedWidth * adjustedHeight;
 
@@ -149,6 +197,8 @@ function calculate() {
         ups: maxUps,
         sheet: sheet,
         totalWastageArea: currentTotalWastageArea,
+        fitW2: fitW2,
+        fitH2: fitH2
       };
     }
   });
@@ -168,7 +218,6 @@ function calculate() {
   } else if (bestFit.ups % 2 === 0) {
     idealPrintingTypeForAlert = "selfback";
   }
-
   if (userSelectedPrintingType !== idealPrintingTypeForAlert) {
     let recommendedText = "";
     switch (idealPrintingTypeForAlert) {
@@ -185,8 +234,6 @@ function calculate() {
         recommendedText = "Other or OK";
         break;
     }
-    // Optional: Show a warning in the result div or as an alert
-    // resultDiv.innerHTML += `<span style='color:orange;'>Warning: You selected '${userSelectedPrintingType}', but the recommended type is '${recommendedText}'.</span>`;
     alert(
       `Warning: You selected '${userSelectedPrintingType}', but the recommended type is '${recommendedText}'.`
     );
@@ -224,7 +271,22 @@ function calculate() {
 
   const perSheetWeight = (paperArea * gsm) / (3100 * 500);
   const totalPaperWeight = perSheetWeight * totalSheets;
-  const paperCost = totalPaperWeight * rate;
+
+  // --- Hotmail Sticker special rate logic ---
+  let paperCost;
+  if (paperTypeValue === "hotmailsticker") {
+    const sizeKey = `${bestFit.sheet.width}x${bestFit.sheet.height}`;
+    const perSheet = hotmailStickerRates[sizeKey];
+    if (perSheet) {
+      paperCost = totalSheets * perSheet;
+    } else {
+      paperCost = 0;
+      resultDiv.innerHTML = "<span style='color:red;'>No Hotmail Sticker rate found for this size (" + sizeKey + ").</span>";
+      return;
+    }
+  } else {
+    paperCost = totalPaperWeight * rate;
+  }
 
   let printingCost = 0;
   const rounds = Math.ceil(sheetsNeeded / 1000);
@@ -357,6 +419,9 @@ function calculate() {
     case "fullgumming":
       fabricationCost = (paperArea * 1.5 * totalSheets) / 100;
       break;
+    case "halfcutting":
+      fabricationCost = (bestFit.fitW2 + bestFit.fitH2 + 4) * 0.08 * totalSheets;
+      break;
   }
 
   let fabricationCostN = 0;
@@ -442,7 +507,6 @@ function calculate() {
       break;
   }
 
-  // --- UPDATED: Add new cost to the total ---
   const totalCost =
     paperCost +
     printingCost +
