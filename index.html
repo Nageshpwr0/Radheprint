@@ -1,156 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Print Cost Calculater</title>
-  <link rel="stylesheet" href="style3.css">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <title>Print Cost Calculater</title>
+    <link rel="stylesheet" href="style3.css">
+  </head>
 
-<body>
+  <body>
+    <nav class="navbar">
+      <a class="nav-item" href="index2.html">Booklet</a>
+      <a class="nav-item" href="index3.html">Cut to Sheet</a>
+      <a class="nav-item" href="kappabox.html">Kappa Box</a>
+      <a class="nav-item" href="poster.html">Poster</a>
+      <a class="nav-item" href="ENVELOPE.html">Envelope</a>
+    </nav>
 
-  <div class="container">
-    <div class="navbar">
-      <img src="4.png.png" width="200px" height="auto">
-      <h2>Print Cost Estimator</h2>
-        
-            <a href="index2.html">BOOKLET</a>
-             <a href="index3.html">BAG</a>
-             <a href="kappabox.html">KAPPA BOX</a>
+    <div class="container">
+      <div class="navbar">
+        <img src="4.png.png" width="200px" height="auto">
+        <h2>Print Cost Estimator</h2>
+          
+            
+      
+
+      </div>
+      <label for="qty">Quantity (pcs):</label>
+      <input type="number" id="qty">
+
+      <label for="jobWidth">Job Width (inches):</label>
+      <input type="text" id="jobWidth" step="0.01">
+
+      <label for="jobHeight">Job Height (inches):</label>
+      <input type="text" id="jobHeight" step="0.01">
+
+      <label for="gsm">GSM:</label>
+      <input type="number" id="gsm">
+
+      <label for="paperType">Paper Type:</label>
+  <select id="paperType" onchange="updateRate()">
+    <option value="78"selected>Art-paper/Card</option>
+    <option value="76">A-Grade-maplitho</option>
+    <option value="75">Maplitho</option>
+    <option value="66">B-Gade-maplitho</option>
+    <option value="85">NS-Maplitho</option>
+    <option value="82">Art-Card-Board</option>
+    <option value="hotmailsticker">Hotmail Sticker</option>
+  </select>
+
+  <label for="rate">Rate per Kg:</label>
+  <input type="number" id="rate" step="0.01" value="78"/>
+
     
 
-    </div>
-    <label for="qty">Quantity (pcs):</label>
-    <input type="number" id="qty">
+      <label for="printingType">Printing Type:</label>
+      <select id="printingType">
+        <option value="selfback"selected>Selfback</option>
+        <option value="frontback">Front-Back</option>
+        <option value="oneside">One Side</option>
+        <option value="doublegripper">Double Gripper</option>
+        <option value="selfback1">Selfback 1+1</option>
+        <option value="frontback1">Front-Back 1+1</option>
+        <option value="oneside1">One Side 1+1</option>
+        <option value="doublegripper1">Double Gripper 1+1</option>
+      </select>
 
-    <label for="jobWidth">Job Width (inches):</label>
-    <input type="text" id="jobWidth" step="0.01">
+      <label for="lamination">Lamination / Varnish:</label>
+      <select id="lamination">
+        <option value="none">None</option>
+        <option value="mattbs">Matt Lamination B/S</option>
+        <option value="glossbs">Gloss Lamination B/S</option>
+        <option value="mattos">Matt Lamination O/S</option>
+        <option value="glossos">Gloss Lamination O/S</option>
+        <option value="varnishbs">Varnish B/S</option>
+        <option value="varnishos">Varnish O/S</option>
+        <option value="thermattbs">Thermal Lamination B/S</option>
+        <option value="thermattos">Thermal Lamination O/S</option>
+        <option value="velmattbs">Velvet Matt Lamination B/S</option>
+        <option value="velmattos">Velvet Matt Lamination O/S</option>
+      </select>
 
-    <label for="jobHeight">Job Height (inches):</label>
-    <input type="text" id="jobHeight" step="0.01">
+      <label for="dieType">Die Type:</label>
+      <select id="dieType">
+        <option value="0">None</option>
+        <option value="1500">Small-Punch</option>
+        <option value="2000">Medium-Punch</option>
+        <option value="3000">Big-Punch</option>
+      </select>
 
-    <label for="gsm">GSM:</label>
-    <input type="number" id="gsm">
+      <label for="punching">Punching:</label>
+      <select id="punching">
+    <option value="none">None</option>
+    <option value="yes">Yes</option>
+  </select>
 
-    <label for="paperType">Paper Type:</label>
-<select id="paperType" onchange="updateRate()">
-  <option value="78"selected>Art-paper/Card</option>
-  <option value="76">A-Grade-maplitho</option>
-  <option value="75">Maplitho</option>
-  <option value="66">B-Gade-maplitho</option>
-  <option value="85">NS-Maplitho</option>
-  <option value="82">Art-Card-Board</option>
-</select>
+      <label for="fabrication">Fabrication:</label>
+      <select id="fabrication">
+        <option value="0">None</option>
+        <option value="singlefold">Single fold</option>
+        <option value="multifold">Multi fold</option>
+        <option value="cardfolding">Card folding</option>
+        <option value="smallenv">Small Envelope Pasting</option>
+        <option value="bigenv">Big Envelope Pasting</option>
+        <option value="windowenv">Window Envelope Pasting</option>
+        <option value="bigwindowenv">Big Window Envelope</option>
+        <option value="a3gum3">A3- Gumming 3Strip</option>
+        <option value="a3gum2">A3- Gumming 2Strip</option>
+        <option value="a4gum2">A4- Gumming 2Strip</option>
+        <option value="threading">Threading</option>
+        <option value="pouch">Pouch Pasting</option>
+        <option value="box">Box Pasting</option>
+        <option value="fullgumming">Full Gumming</option>
+        <option value="wobler">Wobler</option>
+        <option value="tentcard">Tent Card Pasting</option>
+      </select>
 
-<label for="rate">Rate per Kg:</label>
-<input type="number" id="rate" step="0.01" value="78"/>
+      <label for="fabricationN">Fabrication 2:</label>
+      <select id="fabricationN">
+        <option value="0">None</option>
+        <option value="singlefoldN">Single fold</option>
+        <option value="multifoldN">Multi fold</option>
+        <option value="cardfoldingN">Card folding</option>
+        <option value="smallenvN">Small Envelope Pasting</option>
+        <option value="bigenvN">Big Envelope Pasting</option>
+        <option value="windowenvN">Window Envelope Pasting</option>
+        <option value="bigwindowenvN">Big Window Envelope</option>
+        <option value="a3gum3N">A3- Gumming 3Strip</option>
+        <option value="a3gum2N">A3- Gumming 2Strip</option>
+        <option value="a4gum2N">A4- Gumming 2Strip</option>
+        <option value="threadingN">Threading</option>
+        <option value="pouchN">Pouch Pasting</option>
+        <option value="boxN">Box Pasting</option>
+        <option value="wobler">Wobler</option>
+        <option value="fullgummingN">Full Gumming</option>
+         <option value="halfcutting">Half Cutting</option>
+        <option value="tentcardN">Tent Card Pasting</option>
+      </select>
 
-   
+      <label for="additionalProcess">Additional Process:</label>
+      <select id="additionalProcess">
+        <option value="0">None</option>
+        <option value="spotuv">Spot UV</option>
+        <option value="raiseduv">Raised UV</option>
+        <option value="stampfoil">Stamp Foiling</option>
+        <option value="magicfoil">Magic Foil</option>
+        <option value="spotuvbs">Spot UV BS</option>
+        <option value="raiseduvbs">Raised UV BS</option>
+        <option value="stampfoilbs">Stamp Foiling BS</option>
+        <option value="magicfoilbs">Magic Foil BS</option>
+      </select>
+      <div class="actions">
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="window.print()">Print / Save PDF</button>
+      </div>
 
-    <label for="printingType">Printing Type:</label>
-    <select id="printingType">
-      <option value="selfback"selected>Selfback</option>
-      <option value="frontback">Front-Back</option>
-      <option value="oneside">One Side</option>
-      <option value="doublegripper">Double Gripper</option>
-      <option value="selfback1">Selfback 1+1</option>
-      <option value="frontback1">Front-Back 1+1</option>
-      <option value="oneside1">One Side 1+1</option>
-      <option value="doublegripper1">Double Gripper 1+1</option>
-    </select>
-
-    <label for="lamination">Lamination / Varnish:</label>
-    <select id="lamination">
-      <option value="none">None</option>
-      <option value="mattbs">Matt Lamination B/S</option>
-      <option value="glossbs">Gloss Lamination B/S</option>
-      <option value="mattos">Matt Lamination O/S</option>
-      <option value="glossos">Gloss Lamination O/S</option>
-      <option value="varnishbs">Varnish B/S</option>
-      <option value="varnishos">Varnish O/S</option>
-      <option value="thermattbs">Thermal Lamination B/S</option>
-      <option value="thermattos">Thermal Lamination O/S</option>
-      <option value="velmattbs">Velvet Matt Lamination B/S</option>
-      <option value="velmattos">Velvet Matt Lamination O/S</option>
-    </select>
-
-    <label for="dieType">Die Type:</label>
-    <select id="dieType">
-      <option value="0">None</option>
-      <option value="1500">Small-Punch</option>
-      <option value="2000">Medium-Punch</option>
-      <option value="3000">Big-Punch</option>
-    </select>
-
-    <label for="punching">Punching:</label>
-    <select id="punching">
-  <option value="none">None</option>
-  <option value="yes">Yes</option>
-</select>
-
-    <label for="fabrication">Fabrication:</label>
-    <select id="fabrication">
-      <option value="0">None</option>
-      <option value="singlefold">Single fold</option>
-      <option value="multifold">Multi fold</option>
-      <option value="cardfolding">Card folding</option>
-      <option value="smallenv">Small Envelope Pasting</option>
-      <option value="bigenv">Big Envelope Pasting</option>
-      <option value="windowenv">Window Envelope Pasting</option>
-      <option value="bigwindowenv">Big Window Envelope</option>
-      <option value="a3gum3">A3- Gumming 3Strip</option>
-      <option value="a3gum2">A3- Gumming 2Strip</option>
-      <option value="a4gum2">A4- Gumming 2Strip</option>
-      <option value="threading">Threading</option>
-      <option value="pouch">Pouch Pasting</option>
-      <option value="box">Box Pasting</option>
-      <option value="fullgumming">Full Gumming</option>
-      <option value="wobler">Wobler</option>
-      <option value="tentcard">Tent Card Pasting</option>
-    </select>
-
-    <label for="fabricationN">Fabrication 2:</label>
-    <select id="fabricationN">
-      <option value="0">None</option>
-      <option value="singlefoldN">Single fold</option>
-      <option value="multifoldN">Multi fold</option>
-      <option value="cardfoldingN">Card folding</option>
-      <option value="smallenvN">Small Envelope Pasting</option>
-      <option value="bigenvN">Big Envelope Pasting</option>
-      <option value="windowenvN">Window Envelope Pasting</option>
-      <option value="bigwindowenvN">Big Window Envelope</option>
-      <option value="a3gum3N">A3- Gumming 3Strip</option>
-      <option value="a3gum2N">A3- Gumming 2Strip</option>
-      <option value="a4gum2N">A4- Gumming 2Strip</option>
-      <option value="threadingN">Threading</option>
-      <option value="pouchN">Pouch Pasting</option>
-      <option value="boxN">Box Pasting</option>
-      <option value="wobler">Wobler</option>
-      <option value="fullgummingN">Full Gumming</option>
-      <option value="tentcardN">Tent Card Pasting</option>
-    </select>
-
-    <label for="additionalProcess">Additional Process:</label>
-    <select id="additionalProcess">
-      <option value="0">None</option>
-      <option value="spotuv">Spot UV</option>
-      <option value="raiseduv">Raised UV</option>
-      <option value="stampfoil">Stamp Foiling</option>
-      <option value="magicfoil">Magic Foil</option>
-      <option value="spotuvbs">Spot UV BS</option>
-      <option value="raiseduvbs">Raised UV BS</option>
-      <option value="stampfoilbs">Stamp Foiling BS</option>
-      <option value="magicfoilbs">Magic Foil BS</option>
-    </select>
-    <div class="actions">
-      <button onclick="calculate()">Calculate</button>
-      <button onclick="window.print()">Print / Save PDF</button>
+      <div id="result" class="output"></div>
     </div>
 
-    <div id="result" class="output"></div>
-  </div>
+    <script src="script3.js"></script>
+  </body>
 
-  <script src="script3.js"></script>
-</body>
-
-</html>
+  </html>
