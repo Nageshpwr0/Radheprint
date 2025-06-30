@@ -31,7 +31,7 @@
             margin-bottom: 15px;
         }
         .input-group label {
-            display: block; /* Default for most labels */
+            display: block;
             margin-bottom: 5px;
             color: #555;
             font-weight: bold;
@@ -50,48 +50,38 @@
             border-color: #007bff;
             outline: none;
         }
-
-        /* --- Gumming Strips Specific Styles --- */
         .gumming-strips-group {
             display: flex;
-            flex-wrap: wrap; /* ALLOW WRAPPING for mobile responsiveness */
+            flex-wrap: wrap;
             gap: 10px;
             justify-content: space-between;
         }
-        /* Styles for individual gumming input groups (Width, Height, No. of Strips) */
         .gumming-strips-group .input-group {
-            flex: 1 1 calc(50% - 5px); /* On medium/small screens, two items per row */
-            margin-bottom: 0; 
-            
-            /* Make label and input inline within this specific input group */
+            flex: 1 1 calc(50% - 5px);
+            margin-bottom: 0;
             display: flex;
-            align-items: center; 
-            gap: 5px; /* Small space between label and input */
+            align-items: center;
+            gap: 5px;
         }
         .gumming-strips-group .input-group label {
             display: inline-block;
             margin-bottom: 0;
-            flex-shrink: 0; 
-            font-size: 0.9em; /* Slightly smaller font for labels to help fit */
-            white-space: nowrap; /* Prevent label text from wrapping */
-            text-align: right; 
+            flex-shrink: 0;
+            font-size: 0.9em;
+            white-space: nowrap;
+            text-align: right;
             padding-right: 2px;
         }
         .gumming-strips-group .input-group input[type="number"] {
             width: auto;
-            flex-grow: 1; 
-            padding: 8px; 
+            flex-grow: 1;
+            padding: 8px;
         }
-
-        /* Media query for very small screens: stack gumming input groups vertically */
         @media (max-width: 480px) {
             .gumming-strips-group .input-group {
-                flex: 1 1 100%; /* One item per row on very small screens */
+                flex: 1 1 100%;
             }
         }
-        /* --- END Gumming Strips Specific Styles --- */
-
-
         .calculate-button {
             display: block;
             width: 100%;
@@ -141,7 +131,7 @@
             border-top: 1px solid #ccc;
         }
         .result .breakup-section {
-            margin-top: 30px; 
+            margin-top: 30px;
             padding-top: 15px;
             border-top: 1px solid #ccc;
         }
@@ -164,8 +154,6 @@
             font-weight: bold;
             color: #333;
         }
-
-        /* Desktop/Larger Screen Adjustments */
         @media (min-width: 768px) {
             .container {
                 padding: 30px;
@@ -177,14 +165,14 @@
                 gap: 15px;
             }
             .gumming-strips-group .input-group {
-                flex: 1 1 calc(33.333% - 10px); 
+                flex: 1 1 calc(33.333% - 10px);
                 min-width: auto;
             }
             .gumming-strips-group .input-group label {
-                font-size: 1em; 
+                font-size: 1em;
             }
             .gumming-strips-group .input-group input[type="number"] {
-                padding: 10px; 
+                padding: 10px;
             }
         }
     </style>
@@ -198,16 +186,27 @@
             <input type="number" id="qty" name="qty" min="1" value="">
         </div>
 
+        <!-- Paper Type Dropdown (now before GSM) -->
         <div class="input-group">
+            <label for="paper-type">Paper Type:</label>
+            <select id="paper-type" name="paper-type">
+                <option value="78">Art Paper</option>
+                <option value="78">Art Card</option>
+                <option value="76">Maplitho</option>
+                <option value="hotmail">Hotmail sticker</option>
+            </select>
+        </div>
+
+        <!-- GSM is below Paper Type now -->
+        <div class="input-group" id="gsm-group">
             <label for="gsm">GSM (Grams Per Square Meter):</label>
             <input type="number" id="gsm" name="gsm" min="50" max="400" value="">
         </div>
-<div class="input-group">
+
+        <div class="input-group">
             <label for="size">Poster Size:</label>
             <select id="size" name="size">
-                <option value="A4,450,4">A4 (210 x 297 mm)  
-                
-                </option>
+                <option value="A4,450,4">A4 (210 x 297 mm)</option>
                 <option value="12x17.1,450,2" selected>12 x 17.1 inches </option>
                 <option value="14x19,600,2">14 x 19 inches </option>
                 <option value="19x29,600,1">19 x 29 inches</option>
@@ -226,7 +225,7 @@
                 <option value="varnish_os">Varnish OS</option>
             </select>
         </div>
-        <div class="input-group">
+        <div class="input-group" id="gumming-strip-section">
             <label>Gumming Strip Details:</label>
             <div class="gumming-strips-group">
                 <div class="input-group">
@@ -244,8 +243,6 @@
             </div>
         </div>
 
-        
-
         <button type="button" class="calculate-button" onclick="calculateRate()">Calculate Rate</button>
 
         <div class="result" id="calculationResult">
@@ -255,38 +252,101 @@
     </div>
 
     <script>
-        // Map for default gumming widths (in inches)
         const defaultGummingWidths = {
-            'A4': 8.5, 
-            'letter': 8.5, 
-            '12x17.1': 12, 
-            '11x17': 11,   
-            '14x19': 14,   
-            '17.1x24': 17.1, 
-            '19x29': 19,   
-            '17x22.5': 17 
+            'A4': 8.5,
+            'letter': 8.5,
+            '12x17.1': 12,
+            '11x17': 11,
+            '14x19': 14,
+            '17.1x24': 17.1,
+            '19x29': 19,
+            '17x22.5': 17
         };
 
-        // Function to update gumming width based on selected size
+        const hotmailStickerSheets = [
+            { w: 18, h: 25, price: 9 },
+            { w: 18, h: 23, price: 8.5 },
+            { w: 15, h: 20, price: 6 }
+        ];
+
+        function getPosterDimensions(sizeName) {
+            const match = sizeName.match(/^(\d{1,2}(\.\d+)?)x(\d{1,2}(\.\d+)?)/);
+            if (!match) return {pw:0, ph:0};
+            return { pw: parseFloat(match[1]), ph: parseFloat(match[3]) };
+        }
+
+        function getMaxFitPerSheet(sheetW, sheetH, posterW, posterH) {
+            const fit1 = Math.floor(sheetW/posterW) * Math.floor(sheetH/posterH);
+            const fit2 = Math.floor(sheetW/posterH) * Math.floor(sheetH/posterW);
+            return Math.max(fit1, fit2);
+        }
+
         function updateGummingWidth() {
             const sizeSelectElement = document.getElementById('size');
-            const selectedSizeName = sizeSelectElement.value.split(',')[0]; 
+            const selectedSizeName = sizeSelectElement.value.split(',')[0];
             const gummingWidthInput = document.getElementById('gumming-width');
 
             if (defaultGummingWidths.hasOwnProperty(selectedSizeName)) {
                 gummingWidthInput.value = defaultGummingWidths[selectedSizeName];
             } else {
-                gummingWidthInput.value = 0; 
+                gummingWidthInput.value = 0;
             }
         }
 
-        // Add event listener to size dropdown
-        document.addEventListener('DOMContentLoaded', () => {
-            const sizeSelectElement = document.getElementById('size');
-            sizeSelectElement.addEventListener('change', updateGummingWidth);
-            updateGummingWidth(); 
-        });
+        function updatePaperTypeEffects() {
+            const paperTypeEl = document.getElementById('paper-type');
+            const gsmGroup = document.getElementById('gsm-group');
+            const gsmInput = document.getElementById('gsm');
+            const gummingSection = document.getElementById('gumming-strip-section');
+            const type = paperTypeEl.value;
+            const text = paperTypeEl.options[paperTypeEl.selectedIndex].text;
 
+            if (type === 'hotmail') {
+                gsmGroup.style.display = 'none';
+                gummingSection.style.display = 'none';
+            } else {
+                gsmGroup.style.display = '';
+                gummingSection.style.display = '';
+
+                if (type === '76') { // Maplitho
+                    gsmInput.min = 50;
+                    gsmInput.max = 140;
+                } else if (type === '78' && text === 'Art Paper') {
+                    gsmInput.min = 70;
+                    gsmInput.max = 180;
+                } else if (type === '78' && text === 'Art Card') {
+                    gsmInput.min = 181;
+                    gsmInput.max = 401;
+                } else {
+                    gsmInput.min = 50;
+                    gsmInput.max = 400;
+                }
+
+                // Enforce restriction immediately
+                if (gsmInput.value) {
+                    if (parseInt(gsmInput.value) < gsmInput.min) gsmInput.value = gsmInput.min;
+                    if (parseInt(gsmInput.value) > gsmInput.max) gsmInput.value = gsmInput.max;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('size').addEventListener('change', updateGummingWidth);
+            updateGummingWidth();
+            document.getElementById('paper-type').addEventListener('change', updatePaperTypeEffects);
+            updatePaperTypeEffects();
+
+            // GSM live enforcement
+            const gsmInput = document.getElementById('gsm');
+            gsmInput.addEventListener('input', function() {
+                const min = parseInt(this.min);
+                const max = parseInt(this.max);
+                if (this.value) {
+                    if (parseInt(this.value) < min) this.value = min;
+                    if (parseInt(this.value) > max) this.value = max;
+                }
+            });
+        });
 
         function calculateRate() {
             const qty = parseInt(document.getElementById('qty').value);
@@ -294,7 +354,7 @@
             let gummingWidth = parseFloat(document.getElementById('gumming-width').value);
             let gummingHeight = parseFloat(document.getElementById('gumming-height').value);
             const numGummingStrips = parseInt(document.getElementById('gumming-strips-no').value);
-            
+
             const sizeSelectElement = document.getElementById('size');
             const sizeValue = sizeSelectElement.value;
             const selectedSizeText = sizeSelectElement.options[sizeSelectElement.selectedIndex].text;
@@ -307,89 +367,112 @@
             const laminationType = laminationSelectElement.value;
             const selectedLaminationText = laminationSelectElement.options[laminationSelectElement.selectedIndex].text;
 
-            // --- Calculation for Paper Rate ---
-            let wastageSheets = 0;
-            const sheetsPerJob = qty / sizeUps;
+            const paperTypeSelect = document.getElementById('paper-type');
+            const paperTypeValue = paperTypeSelect.value;
+            const paperTypeText = paperTypeSelect.options[paperTypeSelect.selectedIndex].text;
 
-            if (sheetsPerJob < 2000) {
-                wastageSheets = 100;
-            } else if (sheetsPerJob >= 2000 && sheetsPerJob <= 3500) {
-                wastageSheets = 150;
-            } else if (sheetsPerJob > 3500 && sheetsPerJob <= 5000) {
-                wastageSheets = 250;
+            let paperRate = 0;
+            let paperCostBreakdown = '';
+            let laminationCost = 0;
+            let useHotmailSticker = (paperTypeValue === 'hotmail');
+
+            if (useHotmailSticker) {
+                const { pw:posterW, ph:posterH } = getPosterDimensions(selectedSizeName);
+                let bestFit = { fit: 0, sheet: null, neededSheets: 0, fitPerSheet: 0, wastageSheets: 0 };
+                for (const sheet of hotmailStickerSheets) {
+                    const fitPerSheet = getMaxFitPerSheet(sheet.w, sheet.h, posterW, posterH);
+                    if (fitPerSheet > 0) {
+                        let wastageSheets = 0;
+                        if (qty < 2000) wastageSheets = 100;
+                        else if (qty <= 3500) wastageSheets = 150;
+                        else if (qty <= 5000) wastageSheets = 250;
+                        else wastageSheets = Math.ceil(qty * 0.03);
+                        const neededSheets = Math.ceil(qty / fitPerSheet) + wastageSheets;
+                        if (
+                            fitPerSheet > bestFit.fit ||
+                            (fitPerSheet === bestFit.fit && sheet.price < (bestFit.sheet ? bestFit.sheet.price : Infinity))
+                        ) {
+                            bestFit = {
+                                fit: fitPerSheet,
+                                sheet,
+                                neededSheets,
+                                fitPerSheet,
+                                wastageSheets
+                            };
+                        }
+                    }
+                }
+                if (!bestFit.sheet) {
+                    paperRate = 0;
+                    paperCostBreakdown = `Poster size does not fit any Hotmail sticker sheet size.`;
+                } else {
+                    paperRate = bestFit.neededSheets * bestFit.sheet.price;
+                    paperCostBreakdown = `Used Hotmail sticker sheet: ${bestFit.sheet.w}x${bestFit.sheet.h}" at ₹${bestFit.sheet.price}/sheet, ${bestFit.fitPerSheet} per sheet, sheets needed: ${Math.ceil(qty / bestFit.fitPerSheet)}, wastage sheets: ${bestFit.wastageSheets}, total sheets: ${bestFit.neededSheets}`;
+                    let laminationRate = 0;
+                    switch (laminationType) {
+                        case 'matt_lam': laminationRate = 0.45; break;
+                        case 'gloss_lam': laminationRate = 0.42; break;
+                        case 'varnish_os': laminationRate = 0.25; break;
+                        default: laminationRate = 0;
+                    }
+                    laminationCost = bestFit.sheet.w * bestFit.sheet.h * laminationRate * bestFit.neededSheets / 100;
+                }
             } else {
-                wastageSheets = sheetsPerJob * 0.03;
+                let wastageSheets = 0;
+                const sheetsPerJob = qty / sizeUps;
+                if (sheetsPerJob < 2000) wastageSheets = 100;
+                else if (sheetsPerJob <= 3500) wastageSheets = 150;
+                else if (sheetsPerJob <= 5000) wastageSheets = 250;
+                else wastageSheets = Math.ceil(sheetsPerJob * 0.03);
+
+                const totalSheetsNeeded = sheetsPerJob + wastageSheets;
+                const paperTypeRate = parseFloat(paperTypeSelect.value);
+                paperRate = sizeBaseValue * (gsm / 3100) * (paperTypeRate / 500) * totalSheetsNeeded;
+                paperCostBreakdown = `Used rate per kg: ₹${paperTypeRate}, total sheets: ${totalSheetsNeeded}`;
+                let laminationRate = 0;
+                switch (laminationType) {
+                    case 'matt_lam': laminationRate = 0.45; break;
+                    case 'gloss_lam': laminationRate = 0.42; break;
+                    case 'varnish_os': laminationRate = 0.25; break;
+                    default: laminationRate = 0;
+                }
+                laminationCost = sizeBaseValue * laminationRate * totalSheetsNeeded / 100;
             }
 
-            wastageSheets = Math.ceil(wastageSheets); 
-            const totalSheetsNeeded = sheetsPerJob + wastageSheets;
-
-            const paperRate = sizeBaseValue * (gsm / 3100) * (78 / 500) * totalSheetsNeeded;
-
-            // --- Calculation for Printing Cost ---
             let printingCost = 0;
-            const effectiveSheetsForPrinting = qty / sizeUps; 
-
+            const effectiveSheetsForPrinting = qty / sizeUps;
             if (selectedSizeName === '14x19' || selectedSizeName === '19x29') {
                 printingCost = Math.ceil(effectiveSheetsForPrinting / 1000) * 500 + 2200;
             } else {
                 printingCost = Math.ceil(effectiveSheetsForPrinting / 1000) * 400 + 1600;
             }
 
-            // --- Calculation for Lamination Cost ---
-            let laminationRate = 0;
-            switch (laminationType) {
-                case 'matt_lam':
-                    laminationRate = 0.45;
-                    break;
-                case 'gloss_lam':
-                    laminationRate = 0.42;
-                    break;
-                case 'varnish_os':
-                    laminationRate = 0.25;
-                    break;
-                default:
-                    laminationRate = 0;
-            }
-            
-            const laminationCost = sizeBaseValue * laminationRate * totalSheetsNeeded / 100;
-            
-            // --- Calculation for Gumming Strip Cost - Incorporating the "whichever is higher" logic ---
             let gummingStripCost = 0;
-            if (gummingWidth > 0 && gummingHeight > 0 && numGummingStrips > 0) {
-                // Calculate cost based on area (using inches directly as specified)
+            if (!useHotmailSticker && gummingWidth > 0 && gummingHeight > 0 && numGummingStrips > 0) {
                 const areaBasedCost = (gummingWidth * gummingHeight * numGummingStrips) * 1.5 * qty / 100;
-
-                // Calculate minimum cost based on quantity (rounded up per 1000)
-                const quantityBasedMinimum = Math.ceil(qty / 1000) * 450; 
-                
-                // Take the higher of the two costs
+                const quantityBasedMinimum = Math.ceil(qty / 1000) * 450;
                 gummingStripCost = Math.max(areaBasedCost, quantityBasedMinimum);
             }
 
-            // --- Summing up all costs ---
-            const totalAmount = paperRate + printingCost + laminationCost + gummingStripCost; 
-
-            // --- Calculate Rate per Piece ---
+            const totalAmount = paperRate + printingCost + laminationCost + gummingStripCost;
             let ratePerPiece = 0;
             if (qty > 0) {
                 ratePerPiece = totalAmount / qty;
             }
 
-            // --- Construct the Result Summary ---
             let resultHTML = `<h3>Calculation Summary</h3>`;
-
             resultHTML += `<h4>Your Selections:</h4>`;
             resultHTML += `<p><strong>Quantity:</strong> ${qty}</p>`;
-            resultHTML += `<p><strong>GSM:</strong> ${gsm}</p>`;
+            if (!useHotmailSticker) resultHTML += `<p><strong>GSM:</strong> ${gsm}</p>`;
+            resultHTML += `<p><strong>Paper Type:</strong> ${paperTypeText}</p>`;
             resultHTML += `<p><strong>Size:</strong> ${selectedSizeText}</p>`;
-            if (gummingWidth > 0 || gummingHeight > 0 || numGummingStrips > 0) { 
+            if (!useHotmailSticker && (gummingWidth > 0 || gummingHeight > 0 || numGummingStrips > 0)) {
                 resultHTML += `<p><strong>Gumming Strips:</strong> Width: ${gummingWidth.toFixed(2)} inch, Height: ${gummingHeight.toFixed(2)} inch, No. of Strips: ${numGummingStrips}</p>`;
-            } else {
-                 resultHTML += `<p><strong>Gumming Strips:</strong> None</p>`;
+            } else if (!useHotmailSticker) {
+                resultHTML += `<p><strong>Gumming Strips:</strong> None</p>`;
             }
             resultHTML += `<p><strong>Lamination:</strong> ${selectedLaminationText}</p>`;
-            
+
             resultHTML += `<div class="final-rates">`;
             resultHTML += `<div><strong>Total Amount: ₹${totalAmount.toFixed(2)}</strong></div>`;
             resultHTML += `<div><strong>Rate per piece: ₹${ratePerPiece.toFixed(2)}</strong></div>`;
@@ -398,31 +481,15 @@
             resultHTML += `<div class="breakup-section">`;
             resultHTML += `<h4>Cost Breakup:</h4>`;
             resultHTML += `<div class="breakup-item"><span>Paper Cost:</span><span>₹${paperRate.toFixed(2)}</span></div>`;
+            if (useHotmailSticker) {
+                resultHTML += `<div class="breakup-item"><span>Paper Detail:</span><span>${paperCostBreakdown}</span></div>`;
+            }
             resultHTML += `<div class="breakup-item"><span>Printing Cost:</span><span>₹${printingCost.toFixed(2)}</span></div>`;
             resultHTML += `<div class="breakup-item"><span>Lamination Cost:</span><span>₹${laminationCost.toFixed(2)}</span></div>`;
             resultHTML += `<div class="breakup-item"><span>Gumming Strip Cost:</span><span>₹${gummingStripCost.toFixed(2)}</span></div>`;
             resultHTML += `</div>`;
 
-
             document.getElementById('calculationResult').innerHTML = resultHTML;
-
-            // Console logs for debugging
-            console.log(`--- Calculation Details ---`);
-            console.log(`Quantity: ${qty}`);
-            console.log(`GSM: ${gsm}`);
-            console.log(`Gumming Width (inches): ${gummingWidth} inch, Height (inches): ${gummingHeight} inch, No. of Strips: ${numGummingStrips}`);
-            console.log(`Selected Size: ${selectedSizeName} (Base Value: ${sizeBaseValue}, UPS: ${sizeUps})`);
-            console.log(`Lamination Type: ${laminationType} (Rate: ${laminationRate})`);
-            console.log(`Sheets per job (Qty/UPS): ${sheetsPerJob.toFixed(2)}`);
-            console.log(`Wastage Sheets: ${wastageSheets}`);
-            console.log(`Total Sheets Needed (Qty/UPS + Wastage): ${totalSheetsNeeded.toFixed(2)}`);
-            console.log(`Calculated Paper Rate: ₹${paperRate.toFixed(2)}`);
-            console.log(`Calculated Printing Cost: ₹${printingCost.toFixed(2)}`);
-            console.log(`Calculated Lamination Cost: ₹${laminationCost.toFixed(2)}`);
-            console.log(`Calculated Gumming Strip Cost: ₹${gummingStripCost.toFixed(2)}`);
-            console.log(`Final Total Amount: ₹${totalAmount.toFixed(2)}`);
-            console.log(`Rate per piece: ₹${ratePerPiece.toFixed(2)}`);
-            console.log(`---------------------------`);
         }
     </script>
 </body>
