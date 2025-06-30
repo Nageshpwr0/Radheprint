@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="bookletTitle">Booklet Estimator4</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <nav class="w-full text-white py-3 px-6 shadow-md fixed top-0 left-0 z-50 bg-white">
+    <div class="max-w-7xl mx-auto flex justify-start space-x-4">
+      <a class="nav-item" href="poster.html">Poster</a>
+      <a class="nav-item" href="cuttosheet.html">Cut to Sheet</a>
+      <a class="nav-item" href="kappabox.html">Kappa Box</a>
+      <a class="nav-item" href="bag.html">Bag</a>
+      <a class="nav-item" href="ENVELOPE.html">Envelope</a>
+    </div>
+  </nav>
+  <div class="container" style="margin-top:60px;">
+    <img src="4.png.png" width="190" height="100px">
+    <h2>Booklet Estimator4</h2>
+    <div class="form-layout">
+      <div class="form-group">
+        <label for="qty">Quantity:</label>
+        <input type="number" id="qty" />
+      </div>
+      <div class="form-group">
+        <label for="paperType">Paper Type:</label>
+        <select id="paperType" onchange="updatePaperRate()">
+          <option value="">-- Select Paper Type --</option>
+          <option value="Artpaper">Artpaper</option>
+          <option value="ArtCard">ArtCard</option>
+          <option value="A Maplitho">A Maplitho</option>
+          <option value="B Maplitho">B Maplitho</option>
+          <option value="Maplitho">Maplitho</option>
+          <option value="Shunshine">Shunshine</option>
+          <option value="NS maplitho">NS maplitho</option>
+          <option value="Texture Paper">Texture Paper</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="rate">Paper Rate (per kg):</label>
+        <input type="number" id="rate" />
+      </div>
+      <div class="form-group">
+        <label for="paper-size">Paper Size:</label>
+        <select id="paper-size">
+          <option value="" disabled selected>-- Select Size --</option>
+          <option value="A4" data-weight="450" data-ups="8" data-imp="400" data-makrdy="1900">A4</option>
+          <option value="A5" data-weight="450" data-ups="16" data-imp="400" data-makrdy="1900">A5</option>
+          <option value="A6" data-weight="450" data-ups="32" data-imp="400" data-makrdy="1900">A6</option>
+          <option value="Letter" data-weight="414" data-ups="8" data-imp="400" data-makrdy="1900">Letter</option>
+          <option value="Half-Letter" data-weight="414" data-ups="16" data-imp="400" data-makrdy="1900">Half-Letter</option>
+          <option value="7.1x9.5" data-weight="600" data-ups="16" data-imp="500" data-makrdy="2700">7.1x9.5</option>
+          <option value="7.1x4.75" data-weight="600" data-ups="32" data-imp="500" data-makrdy="2700">7.1x4.75</option>
+          <option value="9.5x13.5" data-weight="600" data-ups="8" data-imp="500" data-makrdy="2700">9.5x13.5</option>
+          <option value="9x9" data-weight="600" data-ups="12" data-imp="500" data-makrdy="2700">9x9</option>
+          <option value="8x8" data-weight="450" data-ups="12" data-imp="400" data-makrdy="1900">8x8</option>
+          <option value="12x12" data-weight="400" data-ups="4" data-imp="400" data-makrdy="1900">12x12</option>
+          <option value="11x11" data-weight="276" data-ups="4" data-imp="400" data-makrdy="1900">11x11</option>
+          <option value="20x29.5" data-weight="600" data-ups="4" data-imp="500" data-makrdy="2700">20x29.5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pages">Number of Pages:</label>
+        <input type="number" id="pages" />
+      </div>
+      <div class="form-group">
+        <label for="gsm">GSM:</label>
+        <input type="number" id="gsm" />
+      </div>
+      <div class="form-group">
+        <label for="printing-type">Printing Type:</label>
+        <select id="printing-type">
+          <option value="" disabled selected>-- Select Printing Type --</option>
+          <option value="multi" selected>Multi-Color</option>
+          <option value="single">Single Color</option>
+          <option value="2+2">2+2 Color</option>
+          <option value="common-ruled-4+4">Commen or rulled 4+4</option>
+          <option value="common-ruled-2+2">Commen or rulled 2+2</option>
+          <option value="common-ruled-1+1">Commen or rulled 1+1</option>
+          <option value="common-ruled-4+0">Commen or rulled 4+0</option>
+          <option value="common-ruled-2+0">Commen or rulled 2+0</option>
+          <option value="common-ruled-1+0">Commen or rulled 1+0</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lamination">--Lamination:--</label>
+        <select id="lamination">
+          <option value="none" selected>--No Lamination--</option>
+          <option value="matt-all">Matt Lamination (All Pages)</option>
+          <option value="gloss-all">Gloss Lamination (All Pages)</option>
+          <option value="varnish-all">Varnish (All Pages)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="binding-type">Binding Type:</label>
+        <select id="binding-type">
+          <option value="none">-- Binding --</option>
+          <option value="center-pinning" selected>Center Pinning</option>
+          <option value="section-perfect">Section Binding</option>
+          <option value="perfect-binding">Perfect Binding</option>
+          <option value="loop-pinning">Loop Pinning</option>
+          <option value="wiro">WIRO</option>
+          <option value="hardbound-gally-section">Hardbound Gally Section</option>
+          <option value="top-perfect-pad">Top Perfect Pad</option>
+        </select>
+      </div>
+    </div>
+    <hr>
+    <div id="coverDetailsSection">
+      <h3>Cover Details</h3>
+      <div class="form-layout">
+        <div class="form-group">
+          <label for="coverGsm">Cover GSM:</label>
+          <input type="number" id="coverGsm" value="" />
+        </div>
+        <div class="form-group">
+          <label for="coverPrintingColor">Cover Printing Color:</label>
+          <select id="coverPrintingColor">
+            <option value="none">-- Select Color --</option>
+            <option value="multi" selected>Multi-Color</option>
+            <option value="single">Single Color</option>
+            <option value="2+2">2+2 Color</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="coverLamination">Cover Lamination Type:</label>
+          <select id="coverLamination">
+            <option value="none">--Lamination--</option>
+            <option value="matt" selected>Matt Lamination</option>
+            <option value="gloss">Gloss Lamination</option>
+            <option value="varnish">Varnish</option>
+            <option value="thermal">Thermal Lamination</option>
+            <option value="velvet">Velvet Lamination</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <button id="toggleAdditionalProcess" class="collapsible-button">Additional Process</button>
+    <div id="additionalProcessContent" class="collapsible-content">
+      <div class="form-layout">
+        <div class="form-group">
+          <label for="uvType">UV:</label>
+          <select id="uvType">
+            <option value="none" selected>--No UV--</option>
+            <option value="spot-uv-cover">Spot UV on Cover</option>
+            <option value="raised-uv-cover">Raised UV on Cover</option>
+            <option value="spot-uv-all-pages">Spot UV on All Pages</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="foilingType">Foiling:</label>
+          <select id="foilingType">
+            <option value="none" selected>--No Foiling--</option>
+            <option value="stamp-foil-cover">Stamp Foil on Cover</option>
+            <option value="magic-gold-foil-cover">Magic Gold Foil on Cover</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dripUpType">DripUp:</label>
+          <select id="dripUpType">
+            <option value="none" selected>No DripUp</option>
+            <option value="drip-up-cover">DripUp on Cover</option>
+            <option value="drip-up-all-pages">DripUp on All Pages</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="button-group">
+      <button onclick="calculate()">Calculate</button>
+    </div>
+    <hr>
+
+    <!-- SUMMARY TABLE -->
+    <div id="summary-section">
+      <h3 style="text-align: left;">quotation as per below detail, valid 4-5 days</h3>
+      <table id="summary-table" border="1" style="width:50%;text-align:left;">
+        
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS will fill this dynamically -->
+        </tbody>
+       <tr><td><strong>Amount</strong></td><td id=  "Final-Amount"></td></tr>
+        <tr><td><strong>Final Rate</strong></td><td id="Final-Rate"></td></tr></strong>
+      </table>
+    </div>
+
+    <!-- RESULTS TABLE -->
+    <h3 style="text-align: left;">Thank You </h3>
+    <table id="results-table" border="1" style="width:50%;text-align:left;">
+      <thead>
+        
+        <tr>
+          <th>Item</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Paper Cost</td><td id="paper-cost"></td></tr>
+        <tr><td>Cover Paper Cost</td><td id="cover-paper-cost"></td></tr>
+        <tr><td>Printing Cost</td><td id="printing-cost"></td></tr>
+        <tr><td>Cover Printing Cost</td><td id="cover-printing-cost"></td></tr>
+        <tr><td>Lamination Cost</td><td id="lamination-cost"></td></tr>
+        <tr><td>Cover Lamination Cost</td><td id="cover-lamination-cost"></td></tr>
+        <tr><td>Binding Cost</td><td id="binding-cost"></td></tr>
+        <tr><td>Uv Cost</td><td id="uv-cost"></td></tr>
+        <tr><td>Foiling Cost</td><td id="foiling-cost"></td></tr>
+        <tr><td>Dripup Cost</td><td id="dripup-cost"></td></tr>
+        
+        
+      </tbody>
+    </table>
+  </div>
+  <script src="booklet.js"></script>
+</body>
+</html>
