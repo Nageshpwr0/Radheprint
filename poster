@@ -440,6 +440,22 @@
             resultHTML += `<div class="flex justify-between mb-1"><span class="text-gray-600">Gumming Strip Cost:</span><span class="font-bold text-gray-800">₹${gummingStripCost.toFixed(2)}</span></div>`;
             resultDiv.innerHTML = resultHTML;
         }
+        document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+// Disable certain keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+  // F12
+  if (e.key === "F12") {
+    e.preventDefault();
+  }
+  // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+  if ((e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+      (e.ctrlKey && e.key === 'U')) {
+    e.preventDefault();
+  }
+});
     </script>
 </body>
 </html>
