@@ -5,176 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bag Quotation Calculator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-            box-sizing: border-box;
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            max-width: 500px;
-            margin: 30px auto;
-            box-sizing: border-box;
-        }
-        h1 {
-            color: #0056b3;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-        }
-        .input-group {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .input-group label {
-            flex: 0 0 100px;
-            font-weight: bold;
-            color: #555;
-            margin-right: 10px;
-        }
-        .input-group input[type="number"], .input-group select {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-            min-width: 120px;
-        }
-        .unit {
-            margin-left: 10px;
-            color: #777;
-            flex-shrink: 0;
-        }
-         a {
-            
-            display: inline;
-            width: 150px;
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-        a:hover {
-            background-color: #0056b3;
-        }
-       
-        button {
-            display: block;
-            width: 100%;
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #result, #error {
-            margin-top: 25px;
-            padding: 15px;
-            border: 1px solid;
-            border-radius: 5px;
-            font-weight: bold;
-            text-align: center;
-            display: none;
-            word-wrap: break-word;
-        }
-        #result {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
-        #error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
-        #panelOptions {
-            margin-top: 20px;
-            display: none; /* Initially hidden, controlled by JS */
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        #panelOptions label {
-            margin-bottom: 8px;
-            flex: unset;
-            margin-right: 0;
-            font-weight: bold;
-        }
-        #panelOptions select {
-            width: 100%;
-            max-width: 300px;
-        }
-
-        /* --- Media Queries for Responsiveness --- */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; color: #333; box-sizing: border-box; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 500px; margin: 30px auto; box-sizing: border-box;}
+        h1 { color: #0056b3; text-align: center; margin-bottom: 25px; font-size: 1.8em;}
+        .input-group { margin-bottom: 15px; display: flex; align-items: center; flex-wrap: wrap;}
+        .input-group label { flex: 0 0 100px; font-weight: bold; color: #555; margin-right: 10px;}
+        .input-group input[type="number"], .input-group select { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; min-width: 120px;}
+        .unit { margin-left: 10px; color: #777; flex-shrink: 0;}
+        a { display: inline; width: 150px; padding: 12px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease; margin-top: 10px; text-decoration: none;}
+        a:hover { background-color: #0056b3;}
+        button { display: block; width: 100%; padding: 12px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s ease; margin-top: 10px;}
+        button:hover { background-color: #0056b3;}
+        #result, #error { margin-top: 25px; padding: 15px; border: 1px solid; border-radius: 5px; font-weight: bold; text-align: center; display: none; word-wrap: break-word;}
+        #result { background-color: #d4edda; color: #155724; border-color: #c3e6cb;}
+        #error { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb;}
         @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 20px;
-                margin: 15px auto;
-            }
-            h1 {
-                font-size: 1.5em;
-            }
-            .input-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .input-group label {
-                flex: unset;
-                width: 100%;
-                margin-bottom: 5px;
-                margin-right: 0;
-            }
-            .input-group input[type="number"], .input-group select {
-                width: 100%;
-                min-width: unset;
-            }
-            .unit {
-                width: 100%;
-                text-align: right;
-                margin-top: -10px;
-                margin-bottom: 10px;
-            }
-            #panelOptions {
-                align-items: stretch;
-            }
-            
+            body { padding: 10px;}
+            .container { padding: 20px; margin: 15px auto;}
+            h1 { font-size: 1.5em;}
+            .input-group { flex-direction: column; align-items: flex-start;}
+            .input-group label { flex: unset; width: 100%; margin-bottom: 5px; margin-right: 0;}
+            .input-group input[type="number"], .input-group select { width: 100%; min-width: unset;}
+            .unit { width: 100%; text-align: right; margin-top: -10px; margin-bottom: 10px;}
         }
-        
     </style>
 </head>
 <body>
     <div class="container">
         <img src="4.png.png" width="150px" height="auto">
         <h1>Bag Quotation Calculator</h1>
-        <div >
+        <div>
             <a href="index2.html">BOOKLET</a>
-             <a href="index.html">CUT TO SHEET</a>
-              <a href="kappabox.html">KAPPA BOX</a>
+            <a href="index.html">CUT TO SHEET</a>
+            <a href="kappabox.html">KAPPA BOX</a>
         </div> <br>
-
         <div class="input-group">
             <label for="width">Width:</label>
             <input type="number" id="width" placeholder="Enter width" step="0.01"> <span class="unit">inches</span>
@@ -187,14 +51,11 @@
             <label for="spine">Spine:</label>
             <input type="number" id="spine" placeholder="Enter spine" step="0.01"> <span class="unit">inches</span>
         </div>
-
         <hr style="border: 0; height: 1px; background-color: #ccc; margin: 25px 0;">
-
         <div class="input-group">
             <label for="gsm">GSM:</label>
             <input type="number" id="gsm" placeholder="Enter GSM"> <span class="unit">gsm</span>
         </div>
-
         <div class="input-group">
             <label for="lamination">Lamination:</label>
             <select id="lamination">
@@ -206,34 +67,19 @@
                 <option value="thermal">Thermal Lamination</option>
             </select>
         </div>
-
         <div class="input-group">
             <label for="paperCostPerKg">Paper Cost/Kg:</label>
             <input type="number" id="paperCostPerKg" placeholder="Enter Cost per Kg" step="0.01"> <span class="unit">₹</span>
         </div>
-
         <div class="input-group">
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" placeholder="Enter quantity" step="1"> <span class="unit">bags</span>
         </div>
-
         <button onclick="calculateBag()">Calculate Paper Size & Rate</button>
-
-        <div id="panelOptions" class="input-group">
-            <label for="panelType">Panel Type (for Printing Cost):</label>
-            <select id="panelType">
-                <option value="">Select Panel Type</option>
-                <option value="same">Both side Same Pannel</option>
-                <option value="different">Both side Different Pannel</option>
-            </select>
-        </div>
-
-        <div id="result"></div>
+        <div style="text-align: left;" id="result"></div>
         <div id="error"></div>
     </div>
-
     <script>
-        // Function to determine wastage sheets based on quantity
         function getWastageSheets(quantity) {
             if (quantity <= 100) return 100;
             if (quantity <= 2200) return 150;
@@ -241,12 +87,10 @@
             if (quantity <= 6000) return 300;
             if (quantity <= 9000) return 350;
             if (quantity <= 15000) return 400;
-            // For quantities above 15000, 3% wastage is a common approach
             return Math.ceil(quantity * 0.03);
         }
 
         function calculateBag() {
-            // Get input values
             const width = parseFloat(document.getElementById('width').value);
             const height = parseFloat(document.getElementById('height').value);
             const spine = parseFloat(document.getElementById('spine').value);
@@ -254,55 +98,42 @@
             const lamination = document.getElementById('lamination').value;
             const paperCostPerKg = parseFloat(document.getElementById('paperCostPerKg').value);
             const quantity = parseInt(document.getElementById('quantity').value);
-            let panelType = document.getElementById('panelType').value;
 
             const resultDiv = document.getElementById('result');
             const errorDiv = document.getElementById('error');
-            const panelOptionsDiv = document.getElementById('panelOptions');
 
-            // Reset previous results/errors
             resultDiv.style.display = 'none';
             errorDiv.style.display = 'none';
-            resultDiv.innerText = '';
-            errorDiv.innerText = '';
-            panelOptionsDiv.style.display = 'none';
+            resultDiv.innerHTML = '';
+            errorDiv.innerHTML = '';
 
-            // Input validation
             if (isNaN(width) || isNaN(height) || isNaN(spine) || width <= 0 || height <= 0 || spine < 0) {
-                errorDiv.innerText = "Please enter valid positive numeric values for Width and Height, and non-negative for Spine.";
+                errorDiv.innerHTML = "Please enter valid positive numeric values for Width and Height, and non-negative for Spine.";
                 errorDiv.style.display = 'block';
                 return;
             }
             if (isNaN(gsm) || gsm <= 0) {
-                errorDiv.innerText = "Please enter a valid positive numeric value for GSM.";
+                errorDiv.innerHTML = "Please enter a valid positive numeric value for GSM.";
                 errorDiv.style.display = 'block';
                 return;
             }
             if (isNaN(paperCostPerKg) || paperCostPerKg <= 0) {
-                errorDiv.innerText = "Please enter a valid positive numeric value for Paper Cost/Kg.";
+                errorDiv.innerHTML = "Please enter a valid positive numeric value for Paper Cost/Kg.";
                 errorDiv.style.display = 'block';
                 return;
             }
             if (isNaN(quantity) || quantity <= 0) {
-                errorDiv.innerText = "Please enter a valid positive numeric value for Quantity.";
+                errorDiv.innerHTML = "Please enter a valid positive numeric value for Quantity.";
                 errorDiv.style.display = 'block';
                 return;
             }
 
-
-            // Define padding constants in inches
             const MM_TO_INCH = 25.4;
             const GRIPPER_MM = 19;
-            const TRIM_MM = 2; // Per side
-
-            // Calculate total loss for gripper side and other sides
+            const TRIM_MM = 2;
             const gripperSideLossInches = (GRIPPER_MM + TRIM_MM) / MM_TO_INCH;
             const otherDimensionLossInches = (TRIM_MM + TRIM_MM) / MM_TO_INCH;
-
-            // finalHeight is fixed for the job piece
             const finalHeight = height + (spine * 0.75) + 1.25;
-
-            // Define available full size papers [width, height] in inches
             const availablePapers = [
                 [15, 20], [18, 23], [19, 25], [20, 30],
                 [12, 23], [12, 25], [15, 25], [18, 25], [14, 26]
@@ -312,38 +143,32 @@
             let bestFitPaperPhysicalDimensions = [];
             let maxPiecesPerSheetOverall = 0;
             let minWastagePerSheet = Infinity;
-            let finalWidthAdjustmentUsed = 0.75; // Stores the chosen padding (0.75 or 0.40)
+            let finalWidthAdjustmentUsed = 0.75;
 
-            // Iterate through each paper size to find the best fit
             availablePapers.forEach(paper => {
                 const p1 = paper[0];
                 const p2 = paper[1];
-
                 const effectivePaperOptions = [];
 
-                // Orientation 1: Paper as p1 x p2
                 let effectiveP1_option1, effectiveP2_option1;
-                if (p1 <= p2) { // p1 is the shorter physical side
+                if (p1 <= p2) {
                     effectiveP1_option1 = p1 - gripperSideLossInches;
                     effectiveP2_option1 = p2 - otherDimensionLossInches;
-                } else { // p2 is the shorter physical side
+                } else {
                     effectiveP1_option1 = p1 - otherDimensionLossInches;
                     effectiveP2_option1 = p2 - gripperSideLossInches;
                 }
                 effectivePaperOptions.push([effectiveP1_option1, effectiveP2_option1, `${p1}x${p2}`, p1, p2]);
 
-
-                // Orientation 2: Paper as p2 x p1 (rotated)
                 let effectiveP2_option2, effectiveP1_option2;
-                if (p2 <= p1) { // p2 is the shorter physical side
+                if (p2 <= p1) {
                     effectiveP2_option2 = p2 - gripperSideLossInches;
                     effectiveP1_option2 = p1 - otherDimensionLossInches;
-                } else { // p1 is the shorter physical side
+                } else {
                     effectiveP2_option2 = p2 - otherDimensionLossInches;
                     effectiveP1_option2 = p1 - gripperSideLossInches;
                 }
                 effectivePaperOptions.push([effectiveP2_option2, effectiveP1_option2, `${p2}x${p1}`, p2, p1]);
-
 
                 effectivePaperOptions.forEach(effectivePaper => {
                     const currentEffectiveWidth = effectivePaper[0];
@@ -354,7 +179,6 @@
 
                     if (currentEffectiveWidth <= 0 || currentEffectiveHeight <= 0) return;
 
-                    // --- Calculate UPS for 0.75 padding ---
                     const tempFinalWidth075 = width + spine + 0.75;
                     let currentPiecesFit1_075 = 0;
                     if (tempFinalWidth075 <= currentEffectiveWidth && finalHeight <= currentEffectiveHeight) {
@@ -370,7 +194,6 @@
                         wastage075 = (currentPhysicalWidth * currentPhysicalHeight) - (tempFinalWidth075 * finalHeight * maxCurrentPieces075);
                     }
 
-                    // --- Calculate UPS for 0.40 padding ---
                     const tempFinalWidth040 = width + spine + 0.40;
                     let currentPiecesFit1_040 = 0;
                     if (tempFinalWidth040 <= currentEffectiveWidth && finalHeight <= currentEffectiveHeight) {
@@ -386,18 +209,13 @@
                         wastage040 = (currentPhysicalWidth * currentPhysicalHeight) - (tempFinalWidth040 * finalHeight * maxCurrentPieces040);
                     }
 
-                    // --- Determine the best option (padding and UPS) for this paper/orientation ---
                     let currentChosenPieces = 0;
                     let currentChosenWastage = Infinity;
-                    let currentChosenWidthAdjustment = 0.75; // Default for this inner loop iteration
-
-                    // Rule: Prioritize even UPS with 0.40 adjustment IF it yields a valid number of pieces.
+                    let currentChosenWidthAdjustment = 0.75;
                     if (maxCurrentPieces040 > 0 && maxCurrentPieces040 % 2 === 0) {
                         currentChosenPieces = maxCurrentPieces040;
                         currentChosenWastage = wastage040;
                         currentChosenWidthAdjustment = 0.40;
-
-                        // If 0.75 also leads to an even UPS, compare them based on more pieces then less wastage
                         if (maxCurrentPieces075 > 0 && maxCurrentPieces075 % 2 === 0) {
                             if (maxCurrentPieces075 > currentChosenPieces ||
                                 (maxCurrentPieces075 === currentChosenPieces && wastage075 < currentChosenWastage)) {
@@ -410,8 +228,6 @@
                         currentChosenPieces = maxCurrentPieces075;
                         currentChosenWastage = wastage075;
                         currentChosenWidthAdjustment = 0.75;
-
-                        // Compare with 0.40 option if it also produced valid pieces (regardless of even/odd now)
                         if (maxCurrentPieces040 > 0) {
                             if (maxCurrentPieces040 > currentChosenPieces ||
                                 (maxCurrentPieces040 === currentChosenPieces && wastage040 < currentChosenWastage)) {
@@ -421,8 +237,6 @@
                             }
                         }
                     }
-
-                    // --- Update overall best fit paper ---
                     if (currentChosenPieces > maxPiecesPerSheetOverall) {
                         maxPiecesPerSheetOverall = currentChosenPieces;
                         bestFitPaper = currentPaperName;
@@ -447,123 +261,17 @@
                 });
             });
 
-            // Calculate the actual finalWidth to display and for conceptual use in the cost formula
-            const finalWidthForDisplayAndConceptualUse = width + spine + finalWidthAdjustmentUsed;
-
-
-            // Display the paper size and fitting information
-            if (bestFitPaper && maxPiecesPerSheetOverall > 0) { // Ensure at least one piece fits
-                resultDiv.innerText = `Calculated Job Dimensions: ${finalWidthForDisplayAndConceptualUse.toFixed(2)} x ${finalHeight.toFixed(2)} inches (Padding: ${finalWidthAdjustmentUsed.toFixed(2)})\nOptimal Full Size Paper: ${bestFitPaper} inches (physical size)`;
-
+            if (bestFitPaper && maxPiecesPerSheetOverall > 0) {
                 const actualPaperWidth = bestFitPaperPhysicalDimensions[0];
                 const actualPaperHeight = bestFitPaperPhysicalDimensions[1];
-
-                let effectivePaperWidthForCounting, effectivePaperHeightForCounting;
-
-                // Determine which dimension is the gripper side for effective area calculation
-                if (actualPaperWidth <= actualPaperHeight) {
-                    effectivePaperWidthForCounting = actualPaperWidth - gripperSideLossInches;
-                    effectivePaperHeightForCounting = actualPaperHeight - otherDimensionLossInches;
-                } else {
-                    effectivePaperWidthForCounting = actualPaperWidth - otherDimensionLossInches;
-                    effectivePaperHeightForCounting = actualPaperHeight - gripperSideLossInches;
-                }
-
-                effectivePaperWidthForCounting = Math.max(0, effectivePaperWidthForCounting);
-                effectivePaperHeightForCounting = Math.max(0, effectivePaperHeightForCounting);
-
-                resultDiv.innerText += `\nEffective Printable Area: ${effectivePaperWidthForCounting.toFixed(2)} x ${effectivePaperHeightForCounting.toFixed(2)} inches`;
-                resultDiv.innerText += `\n(Fits ${maxPiecesPerSheetOverall} pieces on the effective printable area.)`;
-
-                // --- Handle Panel Type for Printing Cost ---
-                if (maxPiecesPerSheetOverall === 1) {
-                    panelOptionsDiv.style.display = 'flex'; // Show panel type selection
-                    if (!panelType) {
-                        errorDiv.innerText = "Please select a Panel Type for accurate printing cost calculation.";
-                        errorDiv.style.display = 'block';
-                        // Re-hide result until panel type is selected
-                        resultDiv.style.display = 'none';
-                        return;
-                    }
-                } else {
-                    panelOptionsDiv.style.display = 'none'; // Hide if UPS is > 1
-                    panelType = 'N/A'; // Assign a placeholder if it's not applicable
-                }
-
-
-                // --- Calculate Paper Cost ---
                 const wastageSheets = getWastageSheets(quantity);
                 const fullSheetWidth = actualPaperWidth;
                 const fullSheetHeight = actualPaperHeight;
-
                 const totalPaperCost = (fullSheetWidth * fullSheetHeight * gsm / 3100) * (paperCostPerKg / 500) * ((quantity + wastageSheets) * 2 / maxPiecesPerSheetOverall);
-                const costPerPiecePaperOnly = totalPaperCost / quantity;
 
-
-                // --- Calculate Printing Cost ---
-                let totalPrintingCost = 0;
-                let printingMethod = "";
-                let ratePerFactor = 0; // Will be 400 or 500
-                let baseCost = 0;      // Will be 1600 or 2000
-
-                // Determine rates based on optimal paper size
-                if (bestFitPaper === '20x30' || bestFitPaper === '30x20') {
-                    ratePerFactor = 500;
-                    baseCost = 2000;
-                    printingMethod += " (20x30 Paper Rate)";
-                } else {
-                    ratePerFactor = 400;
-                    baseCost = 1600;
-                    printingMethod += " (Standard Paper Rate)";
-                }
-
-                console.log('--- Printing Cost Debug ---');
-                console.log('Quantity:', quantity);
-                console.log('Max Pieces Per Sheet (UPS):', maxPiecesPerSheetOverall);
-                console.log('Rate Per Factor:', ratePerFactor);
-                console.log('Base Cost:', baseCost);
-
-
-                if (maxPiecesPerSheetOverall === 1) {
-                    if (panelType === 'different') {
-                        // (ROUNDUP(QTY /1000)*RATE+BASE)*2
-                        // This already divides by 1000, so no change needed to factor
-                        totalPrintingCost = (Math.ceil(quantity / 1000) * ratePerFactor + baseCost) * 2;
-                        printingMethod = "1 UPS, Different Panel" + printingMethod;
-                    } else if (panelType === 'same') {
-                        // (ROUNDUP(QTY/1000*2)*RATE+BASE)
-                        // Applying the rule: factor (QTY/1000*2) / 1000
-                        const factor = (quantity / 1000 * 2) / 1000;
-                        totalPrintingCost = (Math.ceil(factor)*2 * ratePerFactor + baseCost);
-                        printingMethod = "1 UPS, Same Panel" + printingMethod;
-                    }
-                } else { // UPS > 1
-                    if (bestFitPaper === '20x30' || bestFitPaper === '30x20') {
-                        // ROUNDUP (QTY/UPS/1000*2)*RATE+BASE
-                        // This already divides by 1000, so no change needed to factor
-                        totalPrintingCost = Math.ceil(quantity / maxPiecesPerSheetOverall / 1000 * 2) * ratePerFactor + baseCost;
-                        printingMethod = `UPS > 1 (${maxPiecesPerSheetOverall} UPS)` + printingMethod;
-                    } else {
-                        // ROUNDUP (QTY/UPS*2)*RATE+BASE
-                        // Applying the rule: factor (QTY/UPS*2) / 1000
-                        const factor = (quantity / maxPiecesPerSheetOverall * 2) / 1000;
-                        totalPrintingCost = Math.ceil(factor) * ratePerFactor + baseCost;
-                        printingMethod = `UPS > 1 (${maxPiecesPerSheetOverall} UPS)` + printingMethod;
-                    }
-                }
-
-                console.log('Calculated Printing Factor (before multiplying by rate):', totalPrintingCost / ratePerFactor); // For debug
-                console.log('Total Printing Cost (raw):', totalPrintingCost); // For debug
-
-
-                const costPerPiecePrintingOnly = totalPrintingCost / quantity;
-
-                // --- Calculate Lamination Cost ---
                 let totalLaminationCost = 0;
                 let laminationDetails = "";
                 const totalSheetsForLamination = (quantity + wastageSheets) / maxPiecesPerSheetOverall;
-
-                // Only calculate if a lamination type is selected
                 if (lamination) {
                     let laminationFactor = 0;
                     switch (lamination) {
@@ -584,105 +292,96 @@
                             laminationDetails = "Thermal Lamination";
                             break;
                         case 'velvet':
-                            laminationFactor = 3; // As specified for Velvet Lamination
+                            laminationFactor = 3;
                             laminationDetails = "Velvet Lamination";
                             break;
                         default:
-                            laminationFactor = 0; // Should not happen with dropdown
+                            laminationFactor = 0;
                             laminationDetails = "None/Invalid";
                     }
-
-                    // Formula: full sheet width * full sheet height * factor * total sheet used / 100
-                    totalLaminationCost = fullSheetWidth * fullSheetHeight * laminationFactor * totalSheetsForLamination *2 / 100;
+                    totalLaminationCost = fullSheetWidth * fullSheetHeight * laminationFactor * totalSheetsForLamination * 2 / 100;
                 } else {
-                    laminationDetails = "None Selected";
+                    laminationDetails = "None";
                 }
 
-                const costPerPieceLaminationOnly = totalLaminationCost / quantity;
-
-                // --- Calculate Additional Costs ---
-                // Cost 1: (roundup(qty*2/ups/1000)*400)
-                const additionalProcessCost = Math.ceil(quantity * 2 / maxPiecesPerSheetOverall / 1000) * 400;
-
-                // Cost 2: (qty * 5)
-                const finishingCostPerBag = quantity * 5;
-
-                // Cost 3: Die Cost based on paper area
                 let dieCost = 0;
                 const paperArea = fullSheetWidth * fullSheetHeight;
-                let dieCostDetails = "";
-
                 if (paperArea < 320) {
                     dieCost = 1500;
-                    dieCostDetails = "Less than 320 sq.in. (₹1500)";
                 } else if (paperArea >= 320 && paperArea <= 450) {
                     dieCost = 2000;
-                    dieCostDetails = "320-450 sq.in. (₹2000)";
                 } else if (paperArea >= 451 && paperArea <= 550) {
                     dieCost = 2500;
-                    dieCostDetails = "451-550 sq.in. (₹2500)";
                 } else if (paperArea > 550) {
                     dieCost = 3200;
-                    dieCostDetails = "More than 550 sq.in. (₹3200)";
-                } else {
-                    dieCostDetails = "N/A (Area calculation error)";
                 }
 
+                // Calculate and display for both panel types
+                const panelTypes = [
+                    { label: "Both Side Same Panel", value: "same" },
+                    { label: "Both Side Different Panel", value: "different" }
+                ];
 
-                // --- Calculate Total Cost ---
-                const finalTotalCost = totalPaperCost + totalPrintingCost + totalLaminationCost + additionalProcessCost + finishingCostPerBag + dieCost;
-                const finalTotalCostPerBag = finalTotalCost / quantity;
+                let resultsHTML = "";
+                panelTypes.forEach(panel => {
+                    // Printing Cost
+                    let totalPrintingCost = 0;
+                    let ratePerFactor = (bestFitPaper === '20x30' || bestFitPaper === '30x20') ? 500 : 400;
+                    let baseCost = (bestFitPaper === '20x30' || bestFitPaper === '30x20') ? 2000 : 1600;
+                    if (maxPiecesPerSheetOverall === 1) {
+                        if (panel.value === 'different') {
+                            totalPrintingCost = (Math.ceil(quantity / 1000) * ratePerFactor + baseCost) * 2;
+                        } else if (panel.value === 'same') {
+                            const factor = (quantity / 1000 * 2) / 1000;
+                            totalPrintingCost = (Math.ceil(factor) * 2 * ratePerFactor + baseCost);
+                        }
+                    } else {
+                        if (bestFitPaper === '20x30' || bestFitPaper === '30x20') {
+                            totalPrintingCost = Math.ceil(quantity / maxPiecesPerSheetOverall / 1000 * 2) * ratePerFactor + baseCost;
+                        } else {
+                            const factor = (quantity / maxPiecesPerSheetOverall * 2) / 1000;
+                            totalPrintingCost = Math.ceil(factor) * ratePerFactor + baseCost;
+                        }
+                    }
 
+                    // Punching & Making Cost
+                    const punchingCost = Math.ceil(quantity * 2 / maxPiecesPerSheetOverall / 1000) * 400;
+                    const makingCost = quantity * 5;
+                    const totalAmt = totalPaperCost + totalPrintingCost + totalLaminationCost + dieCost + punchingCost + makingCost;
+                    const finalRate = totalAmt / quantity;
 
-                // --- Display All Results ---
-                resultDiv.innerText += `\n\n--- Paper Cost Details ---`; 
-                resultDiv.innerText += `\nFull Sheet Dimensions: ${fullSheetWidth.toFixed(2)} x ${fullSheetHeight.toFixed(2)} inches`;
-                resultDiv.innerText += `\nPieces per sheet (UPS): ${maxPiecesPerSheetOverall}`;
-                resultDiv.innerText += `\nWastage sheets (based on quantity): ${wastageSheets}`;
-                resultDiv.innerText += `\nTotal Paper Cost (including wastage): ₹${totalPaperCost.toFixed(2)}`;
-                resultDiv.innerText += `\nPaper Cost per Bag: ₹${costPerPiecePaperOnly.toFixed(2)}`;
+                    resultsHTML += `<b>${panel.label}</b><br>`;
+                    resultsHTML += `qty - ${quantity}<br>`;
+                    resultsHTML += `size - width: ${width} | height: ${height} | spine: ${spine}<br>`;
+                    resultsHTML += `gsm - ${gsm}<br>`;
+                    resultsHTML += `lamination - ${lamination ? laminationDetails : 'None'}<br><br>`;
+                    
+                    resultsHTML += `Total Amt - ₹${totalAmt.toFixed(2)}<br>`;
+                    resultsHTML += `Final Rate - ₹${finalRate.toFixed(2)}<br>`;
+                    resultsHTML += `<hr style="margin:12px 0;">`;
+                    resultsHTML += `paper cost - ₹${totalPaperCost.toFixed(2)}<br>`;
+                    resultsHTML += `printing cost - ₹${totalPrintingCost.toFixed(2)}<br>`;
+                    resultsHTML += `lamination cost - ₹${totalLaminationCost.toFixed(2)}<br>`;
+                    resultsHTML += `die cost - ₹${dieCost.toFixed(2)}<br>`;
+                    resultsHTML += `punching cost - ₹${punchingCost.toFixed(2)}<br>`;
+                    resultsHTML += `making cost - ₹${makingCost.toFixed(2)}<br><hr> `;
+                });
 
-                resultDiv.innerText += `\n\n--- Printing Cost Details ---`;
-                resultDiv.innerText += `\nPrinting Method: ${printingMethod}`;
-                resultDiv.innerText += `\nTotal Printing Cost: ₹${totalPrintingCost.toFixed(2)}`;
-                resultDiv.innerText += `\nPrinting Cost per Bag: ₹${costPerPiecePrintingOnly.toFixed(2)}`;
-
-                resultDiv.innerText += `\n\n--- Lamination Cost Details ---`;
-                resultDiv.innerText += `\nLamination Type: ${laminationDetails}`;
-                resultDiv.innerText += `\nTotal Sheets for Lamination: ${totalSheetsForLamination.toFixed(2)}`;
-                resultDiv.innerText += `\nTotal Lamination Cost: ₹${totalLaminationCost.toFixed(2)}`;
-                resultDiv.innerText += `\nLamination Cost per Bag: ₹${costPerPieceLaminationOnly.toFixed(2)}`;
-
-                resultDiv.innerText += `\n\n--- Additional Charges ---`;
-                resultDiv.innerText += `\nAdditional Process Cost (roundup(qty*2/ups/1000)*400): ₹${additionalProcessCost.toFixed(2)}`;
-                resultDiv.innerText += `\nFinishing Cost (QTY * ₹5): ₹${finishingCostPerBag.toFixed(2)}`;
-                resultDiv.innerText += `\nDie Cost (${dieCostDetails}): ₹${dieCost.toFixed(2)}`;
-
-                resultDiv.innerText += `\n\n--- Grand Total ---`;
-                resultDiv.innerText += `\nTotal Cost: ₹${finalTotalCost.toFixed(2)}`;
-                resultDiv.innerText += `\nTotal Cost per Bag: ₹${finalTotalCostPerBag.toFixed(2)}`;
-
-
+                resultDiv.innerHTML = resultsHTML;
                 resultDiv.style.display = 'block';
                 resultDiv.style.backgroundColor = '#d4edda';
                 resultDiv.style.color = '#155724';
                 resultDiv.style.borderColor = '#c3e6cb';
 
             } else {
+                const finalHeight = height + (spine * 0.75) + 1.25;
                 const finalWidthDefault = width + spine + 0.75;
-                resultDiv.innerText = `Calculated Job Dimensions (Default): ${finalWidthDefault.toFixed(2)} x ${finalHeight.toFixed(2)} inches\nNo available full size paper can accommodate these dimensions, considering internal padding.`;
+                resultDiv.innerHTML = `Calculated Job Dimensions (Default): ${finalWidthDefault.toFixed(2)} x ${finalHeight.toFixed(2)} inches<br>No available full size paper can accommodate these dimensions.<br>`;
                 resultDiv.style.display = 'block';
                 resultDiv.style.backgroundColor = '#f8d7da';
                 resultDiv.style.color = '#721c24';
                 resultDiv.style.borderColor = '#f5c6cb';
-                panelOptionsDiv.style.display = 'none'; // Ensure hidden on error
             }
-
-            console.log("GSM:", gsm);
-            console.log("Lamination:", lamination);
-            console.log("Paper Cost per Kg:", paperCostPerKg);
-            console.log("Quantity:", quantity);
-            console.log("Panel Type:", panelType);
         }
     </script>
 </body>
