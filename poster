@@ -4,192 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poster Rate Calculator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Custom styles for specific elements not easily covered by Tailwind or for fine-tuning */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide number input arrows */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            box-sizing: border-box;
         }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 20px auto;
-            box-sizing: border-box;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-        }
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        .input-group input[type="number"],
-        .input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .input-group input[type="number"]:focus,
-        .input-group select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .gumming-strips-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: space-between;
-        }
-        .gumming-strips-group .input-group {
-            flex: 1 1 calc(50% - 5px);
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .gumming-strips-group .input-group label {
-            display: inline-block;
-            margin-bottom: 0;
-            flex-shrink: 0;
-            font-size: 0.9em;
-            white-space: nowrap;
-            text-align: right;
-            padding-right: 2px;
-        }
-        .gumming-strips-group .input-group input[type="number"] {
-            width: auto;
-            flex-grow: 1;
-            padding: 8px;
-        }
-        @media (max-width: 480px) {
-            .gumming-strips-group .input-group {
-                flex: 1 1 100%;
-            }
-        }
-        .calculate-button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
-        .calculate-button:hover {
-            background-color: #0056b3;
-        }
-        .result {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #e9ecef;
-            border-radius: 4px;
-            text-align: left;
-            font-size: 16px;
-            color: #333;
-        }
-        .result h3 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: #007bff;
-            font-size: 1.3em;
-        }
-        .result p {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        .result strong {
-            color: #000;
-        }
-        .result .final-rates {
-            text-align: center;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #ccc;
-        }
-        .result .breakup-section {
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #ccc;
-        }
-        .result .breakup-section h4 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #333;
-            font-size: 1.1em;
-        }
-        .result .breakup-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-        .result .breakup-item span:first-child {
-            font-weight: normal;
-            color: #555;
-        }
-        .result .breakup-item span:last-child {
-            font-weight: bold;
-            color: #333;
-        }
-        @media (min-width: 768px) {
-            .container {
-                padding: 30px;
-            }
-            h1 {
-                font-size: 2.2em;
-            }
-            .gumming-strips-group {
-                gap: 15px;
-            }
-            .gumming-strips-group .input-group {
-                flex: 1 1 calc(33.333% - 10px);
-                min-width: auto;
-            }
-            .gumming-strips-group .input-group label {
-                font-size: 1em;
-            }
-            .gumming-strips-group .input-group input[type="number"] {
-                padding: 10px;
-            }
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Poster Rate Calculator</h1>
+<body class="bg-gray-100 p-4 min-h-screen flex items-center justify-center">
+    <div class="container bg-white p-6 md:p-8 rounded-xl shadow-lg max-w-2xl w-full relative">
+        <!-- Logo added here -->
+        <img src="4.png.png" alt="Company Logo" class="absolute top-4 right-4 w-40 h-AUTO ">
 
-        <div class="input-group">
-            <label for="qty">Quantity (Qty):</label>
-            <input type="number" id="qty" name="qty" min="1" value="">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-center text-blue-700 mb-8 mt-8">Poster Rate</h1>
+
+        <!-- Quantity Input -->
+        <div class="mb-5">
+            <label for="qty" class="block text-gray-700 text-sm font-bold mb-2">Quantity (Qty):</label>
+            <input type="number" id="qty" name="qty" min="1" value="" placeholder="Enter quantity"
+                   class="shadow-sm appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
         </div>
 
-        <!-- Paper Type Dropdown (now before GSM) -->
-        <div class="input-group">
-            <label for="paper-type">Paper Type:</label>
-            <select id="paper-type" name="paper-type">
+        <!-- Paper Type Select -->
+        <div class="mb-5">
+            <label for="paper-type" class="block text-gray-700 text-sm font-bold mb-2">Paper Type:</label>
+            <select id="paper-type" name="paper-type"
+                    class="shadow-sm border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
                 <option value="78">Art Paper</option>
                 <option value="78">Art Card</option>
                 <option value="76">Maplitho</option>
@@ -197,61 +48,79 @@
             </select>
         </div>
 
-        <!-- GSM is below Paper Type now -->
-        <div class="input-group" id="gsm-group">
-            <label for="gsm">GSM (Grams Per Square Meter):</label>
-            <input type="number" id="gsm" name="gsm" min="50" max="400" value="">
+        <!-- GSM Input (conditionally visible) -->
+        <div class="mb-5" id="gsm-group">
+            <label for="gsm" class="block text-gray-700 text-sm font-bold mb-2">GSM (Grams Per Square Meter):</label>
+            <input type="number" id="gsm" name="gsm" value="" placeholder="Enter GSM"
+                   class="shadow-sm appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
         </div>
 
-        <div class="input-group">
-            <label for="size">Poster Size:</label>
-            <select id="size" name="size">
+        <!-- Poster Size Select -->
+        <div class="mb-5">
+            <label for="size" class="block text-gray-700 text-sm font-bold mb-2">Poster Size:</label>
+            <select id="size" name="size"
+                    class="shadow-sm border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
                 <option value="A4,450,4">A4 (210 x 297 mm)</option>
-                <option value="12x17.1,450,2" selected>12 x 17.1 inches </option>
-                <option value="14x19,600,2">14 x 19 inches </option>
+                <option value="12x17.1,450,2" selected>12 x 17.1 inches</option>
+                <option value="14x19,600,2">14 x 19 inches</option>
                 <option value="19x29,600,1">19 x 29 inches</option>
                 <option value="17.1x24,450,1">17.1 x 24 inches</option>
                 <option value="letter,414,4">Letter (216 x 279 mm)</option>
-                <option value="11x17,414,2">11 x 17 inches </option>
-                <option value="17x22.5,414,1">17 x 22.5 inches </option>
+                <option value="11x17,414,2">11 x 17 inches</option>
+                <option value="17x22.5,414,1">17 x 22.5 inches</option>
             </select>
         </div>
 
-        <div class="input-group">
-            <label for="lamination">Lamination Type:</label>
-            <select id="lamination" name="lamination">
+        <!-- Lamination Type Select -->
+        <div class="mb-5">
+            <label for="lamination" class="block text-gray-700 text-sm font-bold mb-2">Lamination Type:</label>
+            <select id="lamination" name="lamination"
+                    class="shadow-sm border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
                 <option value="matt_lam">Matt Lam</option>
                 <option value="gloss_lam">Gloss Lam</option>
                 <option value="varnish_os">Varnish OS</option>
             </select>
         </div>
-        <div class="input-group" id="gumming-strip-section">
-            <label>Gumming Strip Details:</label>
-            <div class="gumming-strips-group">
-                <div class="input-group">
-                    <label for="gumming-width">Width (inch):</label>
-                    <input type="number" id="gumming-width" name="gumming-width" min="0" step="0.1" value="0">
+
+        <!-- Gumming Strip Details (conditionally visible) -->
+        <div class="mb-5" id="gumming-strip-section">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Gumming Strip Details:</label>
+            <div class="flex flex-wrap sm:flex-row gap-4">
+                <!-- Gumming Width Input Group -->
+                <div class="flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0 bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label for="gumming-width" class="block text-gray-600 text-sm font-medium mb-2">Width (inch):</label>
+                    <input type="number" id="gumming-width" name="gumming-width" min="0" step="0.1" value="0"
+                           class="w-full shadow-sm appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
                 </div>
-                <div class="input-group">
-                    <label for="gumming-height">Height (inch):</label>
-                    <input type="number" id="gumming-height" name="gumming-height" min="0" step="0.1" value="1">
+                <!-- Gumming Height Input Group -->
+                <div class="flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0 bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label for="gumming-height" class="block text-gray-600 text-sm font-medium mb-2">Height (inch):</label>
+                    <input type="number" id="gumming-height" name="gumming-height" min="0" step="0.1" value="1"
+                           class="w-full shadow-sm appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
                 </div>
-                <div class="input-group">
-                    <label for="gumming-strips-no">No. of Strips:</label>
-                    <input type="number" id="gumming-strips-no" name="gumming-strips-no" min="0" value="3">
+                <!-- Number of Strips Input Group -->
+                <div class="flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0 bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <label for="gumming-strips-no" class="block text-gray-600 text-sm font-medium mb-2">No. of Strips:</label>
+                    <input type="number" id="gumming-strips-no" name="gumming-strips-no" min="0" value="3"
+                           class="w-full shadow-sm appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out">
                 </div>
             </div>
         </div>
 
-        <button type="button" class="calculate-button" onclick="calculateRate()">Calculate Rate</button>
+        <!-- Calculate Button -->
+        <button type="button" class="calculate-button w-full py-3 mt-6 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105" onclick="calculateRate()">
+            Calculate Rate
+        </button>
 
-        <div class="result" id="calculationResult">
-            <h3>Calculation Summary</h3>
-            <p>Please enter details and click "Calculate Rate".</p>
+        <!-- Calculation Result Display -->
+        <div class="result mt-8 p-6 bg-blue-50 rounded-lg shadow-inner text-gray-800" id="calculationResult">
+            <h3 class="text-xl font-bold text-center text-blue-800 mb-4">Calculation Summary</h3>
+            <p class="text-center text-gray-600">Please enter details and click "Calculate Rate" to see the results.</p>
         </div>
     </div>
 
     <script>
+        // Default gumming widths for various poster sizes
         const defaultGummingWidths = {
             'A4': 8.5,
             'letter': 8.5,
@@ -263,24 +132,46 @@
             '17x22.5': 17
         };
 
+        // Hotmail sticker sheet dimensions and prices
         const hotmailStickerSheets = [
             { w: 18, h: 25, price: 9 },
             { w: 18, h: 23, price: 8.5 },
             { w: 15, h: 20, price: 6 }
         ];
 
+        /**
+         * Extracts poster dimensions (width and height) from a size name string.
+         * Assumes format like "WxH" (e.g., "12x17.1").
+         * @param {string} sizeName - The string representing the poster size.
+         * @returns {{pw: number, ph: number}} An object with poster width (pw) and poster height (ph).
+         */
         function getPosterDimensions(sizeName) {
             const match = sizeName.match(/^(\d{1,2}(\.\d+)?)x(\d{1,2}(\.\d+)?)/);
-            if (!match) return {pw:0, ph:0};
+            if (!match) return { pw: 0, ph: 0 };
             return { pw: parseFloat(match[1]), ph: parseFloat(match[3]) };
         }
 
+        /**
+         * Calculates the maximum number of posters that can fit on a given sheet.
+         * Considers both portrait and landscape orientations for optimal fit.
+         * @param {number} sheetW - Width of the sheet.
+         * @param {number} sheetH - Height of the sheet.
+         * @param {number} posterW - Width of the poster.
+         * @param {number} posterH - Height of the poster.
+         * @returns {number} The maximum number of posters that can fit.
+         */
         function getMaxFitPerSheet(sheetW, sheetH, posterW, posterH) {
-            const fit1 = Math.floor(sheetW/posterW) * Math.floor(sheetH/posterH);
-            const fit2 = Math.floor(sheetW/posterH) * Math.floor(sheetH/posterW);
+            // Fit posters in portrait orientation on the sheet
+            const fit1 = Math.floor(sheetW / posterW) * Math.floor(sheetH / posterH);
+            // Fit posters in landscape orientation on the sheet
+            const fit2 = Math.floor(sheetW / posterH) * Math.floor(sheetH / posterW);
             return Math.max(fit1, fit2);
         }
 
+        /**
+         * Updates the gumming width input field based on the selected poster size.
+         * Uses predefined defaultGummingWidths.
+         */
         function updateGummingWidth() {
             const sizeSelectElement = document.getElementById('size');
             const selectedSizeName = sizeSelectElement.value.split(',')[0];
@@ -289,10 +180,14 @@
             if (defaultGummingWidths.hasOwnProperty(selectedSizeName)) {
                 gummingWidthInput.value = defaultGummingWidths[selectedSizeName];
             } else {
-                gummingWidthInput.value = 0;
+                gummingWidthInput.value = 0; // Default to 0 if no specific default
             }
         }
 
+        /**
+         * Adjusts the visibility of GSM and gumming strip sections and sets GSM min/max
+         * based on the selected paper type.
+         */
         function updatePaperTypeEffects() {
             const paperTypeEl = document.getElementById('paper-type');
             const gsmGroup = document.getElementById('gsm-group');
@@ -302,57 +197,60 @@
             const text = paperTypeEl.options[paperTypeEl.selectedIndex].text;
 
             if (type === 'hotmail') {
-                gsmGroup.style.display = 'none';
-                gummingSection.style.display = 'none';
+                gsmGroup.classList.add('hidden'); // Hide GSM for hotmail sticker
+                gummingSection.classList.add('hidden'); // Hide gumming for hotmail sticker
             } else {
-                gsmGroup.style.display = '';
-                gummingSection.style.display = '';
+                gsmGroup.classList.remove('hidden'); // Show GSM
+                gummingSection.classList.remove('hidden'); // Show gumming
 
+                // Set GSM min/max based on paper type
                 if (type === '76') { // Maplitho
                     gsmInput.min = 50;
-                    gsmInput.max = 140;
+                    gsmInput.max = 130;
+                    gsmInput.step = 1;
+                    if (gsmInput.value === "" || gsmInput.value < 50 || gsmInput.value > 130) gsmInput.value = 80; // Default for Maplitho
                 } else if (type === '78' && text === 'Art Paper') {
-                    gsmInput.min = 70;
+                    gsmInput.min = 60;
                     gsmInput.max = 180;
+                    gsmInput.step = 1;
+                    if (gsmInput.value === "" || gsmInput.value < 60 || gsmInput.value > 130) gsmInput.value = 90; // Default for Art Paper
                 } else if (type === '78' && text === 'Art Card') {
-                    gsmInput.min = 181;
+                    gsmInput.min = 180;
                     gsmInput.max = 401;
-                } else {
-                    gsmInput.min = 50;
-                    gsmInput.max = 400;
-                }
-
-                // Enforce restriction immediately
-                if (gsmInput.value) {
-                    if (parseInt(gsmInput.value) < gsmInput.min) gsmInput.value = gsmInput.min;
-                    if (parseInt(gsmInput.value) > gsmInput.max) gsmInput.value = gsmInput.max;
+                    gsmInput.step = 1;
+                    if (gsmInput.value === "" || gsmInput.value < 180 || gsmInput.value > 401) gsmInput.value = 250; // Default for Art Card
+                } else { // Fallback for other types or initial load
+                    gsmInput.min = '';
+                    gsmInput.max = '';
+                    gsmInput.step = 1;
                 }
             }
         }
 
+        // Event listeners for changes and initial setup on DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('size').addEventListener('change', updateGummingWidth);
-            updateGummingWidth();
             document.getElementById('paper-type').addEventListener('change', updatePaperTypeEffects);
-            updatePaperTypeEffects();
-
-            // GSM live enforcement
-            const gsmInput = document.getElementById('gsm');
-            gsmInput.addEventListener('input', function() {
-                const min = parseInt(this.min);
-                const max = parseInt(this.max);
-                if (this.value) {
-                    if (parseInt(this.value) < min) this.value = min;
-                    if (parseInt(this.value) > max) this.value = max;
-                }
-            });
+            updateGummingWidth(); // Set initial gumming width
+            updatePaperTypeEffects(); // Set initial GSM visibility and range
+            // Set initial default values for quantity and GSM if empty
+            if (document.getElementById('qty').value === "") {
+                document.getElementById('qty').value = 1000;
+            }
+            if (document.getElementById('gsm').value === "") {
+                document.getElementById('gsm').value = 90; // Default GSM for initial load
+            }
         });
 
+        /**
+         * Calculates the total rate and rate per piece for posters based on user inputs.
+         * Displays a detailed cost breakup.
+         */
         function calculateRate() {
             const qty = parseInt(document.getElementById('qty').value);
             const gsm = parseInt(document.getElementById('gsm').value);
-            let gummingWidth = parseFloat(document.getElementById('gumming-width').value);
-            let gummingHeight = parseFloat(document.getElementById('gumming-height').value);
+            const gummingWidth = parseFloat(document.getElementById('gumming-width').value);
+            const gummingHeight = parseFloat(document.getElementById('gumming-height').value);
             const numGummingStrips = parseInt(document.getElementById('gumming-strips-no').value);
 
             const sizeSelectElement = document.getElementById('size');
@@ -360,8 +258,8 @@
             const selectedSizeText = sizeSelectElement.options[sizeSelectElement.selectedIndex].text;
             const sizeParts = sizeValue.split(',');
             const selectedSizeName = sizeParts[0];
-            const sizeBaseValue = parseFloat(sizeParts[1]);
-            const sizeUps = parseInt(sizeParts[2]);
+            const sizeBaseValue = parseFloat(sizeParts[1]); // Base value for paper calculation
+            const sizeUps = parseInt(sizeParts[2]); // Number of posters that fit on one sheet
 
             const laminationSelectElement = document.getElementById('lamination');
             const laminationType = laminationSelectElement.value;
@@ -371,14 +269,44 @@
             const paperTypeValue = paperTypeSelect.value;
             const paperTypeText = paperTypeSelect.options[paperTypeSelect.selectedIndex].text;
 
+            const resultDiv = document.getElementById('calculationResult');
+
+            // --- Input Validation ---
+            if (isNaN(qty) || qty <= 0) {
+                resultDiv.innerHTML = `<h3 class="text-xl font-bold text-center text-red-600 mb-4">Input Error</h3><p class="text-center text-red-500">Please enter a valid Quantity (must be a positive number).</p>`;
+                return;
+            }
+
+            const useHotmailSticker = (paperTypeValue === 'hotmail');
+
+            if (!useHotmailSticker) {
+                if (isNaN(gsm) || gsm <= 0) {
+                    resultDiv.innerHTML = `<h3 class="text-xl font-bold text-center text-red-600 mb-4">Input Error</h3><p class="text-center text-red-500">Please enter a valid GSM (must be a positive number).</p>`;
+                    return;
+                }
+                // Validate GSM against min/max for non-Hotmail paper types
+                const gsmInput = document.getElementById('gsm');
+                if (gsm < parseInt(gsmInput.min) || gsm > parseInt(gsmInput.max)) {
+                     resultDiv.innerHTML = `<h3 class="text-xl font-bold text-center text-red-600 mb-4">Input Error</h3><p class="text-center text-red-500">GSM for ${paperTypeText} must be between ${gsmInput.min} and ${gsmInput.max}.</p>`;
+                     return;
+                }
+            }
+
+            if (isNaN(gummingWidth) || gummingWidth < 0 || isNaN(gummingHeight) || gummingHeight < 0 || isNaN(numGummingStrips) || numGummingStrips < 0) {
+                resultDiv.innerHTML = `<h3 class="text-xl font-bold text-center text-red-600 mb-4">Input Error</h3><p class="text-center text-red-500">Please enter valid Gumming Strip details (non-negative numbers).</p>`;
+                return;
+            }
+
             let paperRate = 0;
             let paperCostBreakdown = '';
             let laminationCost = 0;
-            let useHotmailSticker = (paperTypeValue === 'hotmail');
+            let totalSheetsNeededForPaper = 0; // To be used for lamination cost calculation
 
+            // --- Paper Cost Calculation ---
             if (useHotmailSticker) {
-                const { pw:posterW, ph:posterH } = getPosterDimensions(selectedSizeName);
+                const { pw: posterW, ph: posterH } = getPosterDimensions(selectedSizeName);
                 let bestFit = { fit: 0, sheet: null, neededSheets: 0, fitPerSheet: 0, wastageSheets: 0 };
+
                 for (const sheet of hotmailStickerSheets) {
                     const fitPerSheet = getMaxFitPerSheet(sheet.w, sheet.h, posterW, posterH);
                     if (fitPerSheet > 0) {
@@ -386,8 +314,11 @@
                         if (qty < 2000) wastageSheets = 100;
                         else if (qty <= 3500) wastageSheets = 150;
                         else if (qty <= 5000) wastageSheets = 250;
-                        else wastageSheets = Math.ceil(qty * 0.03);
+                        else wastageSheets = Math.ceil(qty * 0.03); // 3% wastage for larger quantities
+
                         const neededSheets = Math.ceil(qty / fitPerSheet) + wastageSheets;
+
+                        // Prioritize higher fit, then lower price for the same fit
                         if (
                             fitPerSheet > bestFit.fit ||
                             (fitPerSheet === bestFit.fit && sheet.price < (bestFit.sheet ? bestFit.sheet.price : Infinity))
@@ -402,94 +333,112 @@
                         }
                     }
                 }
+
                 if (!bestFit.sheet) {
                     paperRate = 0;
-                    paperCostBreakdown = `Poster size does not fit any Hotmail sticker sheet size.`;
+                    paperCostBreakdown = `Poster size (${selectedSizeName}) does not fit any Hotmail sticker sheet size.`;
                 } else {
-                    paperRate = bestFit.neededSheets * bestFit.sheet.price;
-                    paperCostBreakdown = `Used Hotmail sticker sheet: ${bestFit.sheet.w}x${bestFit.sheet.h}" at ₹${bestFit.sheet.price}/sheet, ${bestFit.fitPerSheet} per sheet, sheets needed: ${Math.ceil(qty / bestFit.fitPerSheet)}, wastage sheets: ${bestFit.wastageSheets}, total sheets: ${bestFit.neededSheets}`;
-                    let laminationRate = 0;
+                    totalSheetsNeededForPaper = bestFit.neededSheets;
+                    paperRate = totalSheetsNeededForPaper * bestFit.sheet.price;
+                    paperCostBreakdown = `Used Hotmail sticker sheet: ${bestFit.sheet.w}x${bestFit.sheet.h}" at ₹${bestFit.sheet.price}/sheet, ${bestFit.fitPerSheet} posters per sheet. Total sheets (including wastage of ${bestFit.wastageSheets}): ${totalSheetsNeededForPaper}.`;
+
+                    // Lamination cost for Hotmail stickers is based on sheet area
+                    let laminationRatePerSqInch = 0;
                     switch (laminationType) {
-                        case 'matt_lam': laminationRate = 0.45; break;
-                        case 'gloss_lam': laminationRate = 0.42; break;
-                        case 'varnish_os': laminationRate = 0.25; break;
-                        default: laminationRate = 0;
+                        case 'matt_lam': laminationRatePerSqInch = 0.45; break;
+                        case 'gloss_lam': laminationRatePerSqInch = 0.42; break;
+                        case 'varnish_os': laminationRatePerSqInch = 0.25; break;
+                        default: laminationRatePerSqInch = 0;
                     }
-                    laminationCost = bestFit.sheet.w * bestFit.sheet.h * laminationRate * bestFit.neededSheets / 100;
+                    laminationCost = bestFit.sheet.w * bestFit.sheet.h * laminationRatePerSqInch * totalSheetsNeededForPaper / 100; // Assuming rate is per 100 sq inches
                 }
             } else {
-                let wastageSheets = 0;
+                // Calculation for Art Paper, Art Card, Maplitho
                 const sheetsPerJob = qty / sizeUps;
+                let wastageSheets = 0;
                 if (sheetsPerJob < 2000) wastageSheets = 100;
                 else if (sheetsPerJob <= 3500) wastageSheets = 150;
                 else if (sheetsPerJob <= 5000) wastageSheets = 250;
-                else wastageSheets = Math.ceil(sheetsPerJob * 0.03);
+                else wastageSheets = Math.ceil(sheetsPerJob * 0.03); // 3% wastage for larger quantities
 
-                const totalSheetsNeeded = sheetsPerJob + wastageSheets;
-                const paperTypeRate = parseFloat(paperTypeSelect.value);
-                paperRate = sizeBaseValue * (gsm / 3100) * (paperTypeRate / 500) * totalSheetsNeeded;
-                paperCostBreakdown = `Used rate per kg: ₹${paperTypeRate}, total sheets: ${totalSheetsNeeded}`;
-                let laminationRate = 0;
+                totalSheetsNeededForPaper = sheetsPerJob + wastageSheets;
+                const paperTypeRate = parseFloat(paperTypeSelect.value); // Rate per kg for paper type
+                // Paper rate calculation: (Size Base Value * GSM / 3100) * (Paper Type Rate / 500) * Total Sheets
+                // 3100 is a constant related to paper weight calculation (e.g., for a specific sheet size)
+                // 500 is likely the number of sheets in a ream, if paperTypeRate is per ream
+                paperRate = sizeBaseValue * (gsm / 3100) * (paperTypeRate / 500) * totalSheetsNeededForPaper;
+                paperCostBreakdown = `Paper rate per kg: ₹${paperTypeRate}. Total sheets (including wastage of ${wastageSheets}): ${totalSheetsNeededForPaper}.`;
+
+                // Lamination cost for non-Hotmail stickers
+                let laminationRatePerSqInch = 0;
                 switch (laminationType) {
-                    case 'matt_lam': laminationRate = 0.45; break;
-                    case 'gloss_lam': laminationRate = 0.42; break;
-                    case 'varnish_os': laminationRate = 0.25; break;
-                    default: laminationRate = 0;
+                    case 'matt_lam': laminationRatePerSqInch = 0.45; break;
+                    case 'gloss_lam': laminationRatePerSqInch = 0.42; break;
+                    case 'varnish_os': laminationRatePerSqInch = 0.25; break;
+                    default: laminationRatePerSqInch = 0;
                 }
-                laminationCost = sizeBaseValue * laminationRate * totalSheetsNeeded / 100;
+                laminationCost = sizeBaseValue * laminationRatePerSqInch * totalSheetsNeededForPaper / 100; // Assuming rate is per 100 sq inches
             }
 
+            // --- Printing Cost Calculation ---
             let printingCost = 0;
-            const effectiveSheetsForPrinting = qty / sizeUps;
+            const effectiveSheetsForPrinting = qty / sizeUps; // Actual number of sheets printed (excluding wastage for paper calculation)
             if (selectedSizeName === '14x19' || selectedSizeName === '19x29') {
+                // Larger sizes have a higher base cost and per-thousand cost
                 printingCost = Math.ceil(effectiveSheetsForPrinting / 1000) * 500 + 2200;
             } else {
+                // Smaller sizes
                 printingCost = Math.ceil(effectiveSheetsForPrinting / 1000) * 400 + 1600;
             }
 
+            // --- Gumming Strip Cost Calculation ---
             let gummingStripCost = 0;
             if (!useHotmailSticker && gummingWidth > 0 && gummingHeight > 0 && numGummingStrips > 0) {
-                const areaBasedCost = (gummingWidth * gummingHeight * numGummingStrips) * 1.5 * qty / 100;
+                // Area-based cost: (width * height * number of strips) * rate per sq inch * quantity / 100
+                const areaBasedCost = (gummingWidth * gummingHeight * numGummingStrips) * 1.5 * qty / 100; // Rate 1.5 per 100 sq inches
+                // Quantity-based minimum cost: minimum charge per 1000 quantity
                 const quantityBasedMinimum = Math.ceil(qty / 1000) * 450;
                 gummingStripCost = Math.max(areaBasedCost, quantityBasedMinimum);
             }
 
+            // --- Total Calculation ---
             const totalAmount = paperRate + printingCost + laminationCost + gummingStripCost;
             let ratePerPiece = 0;
             if (qty > 0) {
                 ratePerPiece = totalAmount / qty;
             }
 
-            let resultHTML = `<h3>Calculation Summary</h3>`;
-            resultHTML += `<h4>Your Selections:</h4>`;
-            resultHTML += `<p><strong>Quantity:</strong> ${qty}</p>`;
-            if (!useHotmailSticker) resultHTML += `<p><strong>GSM:</strong> ${gsm}</p>`;
-            resultHTML += `<p><strong>Paper Type:</strong> ${paperTypeText}</p>`;
-            resultHTML += `<p><strong>Size:</strong> ${selectedSizeText}</p>`;
+            // --- Display Results ---
+            let resultHTML = `<h3 class="text-xl font-bold text-center text-blue-800 mb-4">Calculation Summary</h3>`;
+            resultHTML += `<h4 class="text-lg font-semibold text-gray-700 mb-3">Your Selections:</h4>`;
+            resultHTML += `<p class="mb-1"><strong class="font-semibold">Quantity:</strong> <span class="text-gray-600">${qty}</span></p>`;
+            if (!useHotmailSticker) resultHTML += `<p class="mb-1"><strong class="font-semibold">GSM:</strong> <span class="text-gray-600">${gsm}</span></p>`;
+            resultHTML += `<p class="mb-1"><strong class="font-semibold">Paper Type:</strong> <span class="text-gray-600">${paperTypeText}</span></p>`;
+            resultHTML += `<p class="mb-1"><strong class="font-semibold">Size:</strong> <span class="text-gray-600">${selectedSizeText}</span></p>`;
             if (!useHotmailSticker && (gummingWidth > 0 || gummingHeight > 0 || numGummingStrips > 0)) {
-                resultHTML += `<p><strong>Gumming Strips:</strong> Width: ${gummingWidth.toFixed(2)} inch, Height: ${gummingHeight.toFixed(2)} inch, No. of Strips: ${numGummingStrips}</p>`;
+                resultHTML += `<p class="mb-1"><strong class="font-semibold">Gumming Strips:</strong> <span class="text-gray-600">Width: ${gummingWidth.toFixed(2)} inch, Height: ${gummingHeight.toFixed(2)} inch, No. of Strips: ${numGummingStrips}</span></p>`;
             } else if (!useHotmailSticker) {
-                resultHTML += `<p><strong>Gumming Strips:</strong> None</p>`;
+                resultHTML += `<p class="mb-1"><strong class="font-semibold">Gumming Strips:</strong> <span class="text-gray-600">None</span></p>`;
             }
-            resultHTML += `<p><strong>Lamination:</strong> ${selectedLaminationText}</p>`;
+            resultHTML += `<p class="mb-1"><strong class="font-semibold">Lamination:</strong> <span class="text-gray-600">${selectedLaminationText}</span></p>`;
 
-            resultHTML += `<div class="final-rates">`;
-            resultHTML += `<div><strong>Total Amount: ₹${totalAmount.toFixed(2)}</strong></div>`;
-            resultHTML += `<div><strong>Rate per piece: ₹${ratePerPiece.toFixed(2)}</strong></div>`;
+            resultHTML += `<div class="final-rates text-center mt-6 pt-4 border-t border-blue-200">`;
+            resultHTML += `<div class="text-2xl font-extrabold text-blue-700 mb-2">Total Amount: ₹${totalAmount.toFixed(2)}</div>`;
+            resultHTML += `<div class="text-xl font-bold text-blue-600">Rate per piece: ₹${ratePerPiece.toFixed(2)}</div>`;
             resultHTML += `</div>`;
 
-            resultHTML += `<div class="breakup-section">`;
-            resultHTML += `<h4>Cost Breakup:</h4>`;
-            resultHTML += `<div class="breakup-item"><span>Paper Cost:</span><span>₹${paperRate.toFixed(2)}</span></div>`;
+            resultHTML += `<div class="breakup-section mt-6 pt-4 border-t border-blue-200">`;
+            resultHTML += `<h4 class="text-lg font-semibold text-gray-700 text-center mb-3">Cost Breakup:</h4>`;
+            resultHTML += `<div class="flex justify-between mb-1"><span class="text-gray-600">Paper Cost:</span><span class="font-bold text-gray-800">₹${paperRate.toFixed(2)}</span></div>`;
             if (useHotmailSticker) {
-                resultHTML += `<div class="breakup-item"><span>Paper Detail:</span><span>${paperCostBreakdown}</span></div>`;
+                resultHTML += `<div class="flex justify-between text-xs italic mb-1"><span class="text-gray-500">(${paperCostBreakdown})</span><span></span></div>`;
+            } else {
+                 resultHTML += `<div class="flex justify-between text-xs italic mb-1"><span class="text-gray-500">(${paperCostBreakdown})</span><span></span></div>`;
             }
-            resultHTML += `<div class="breakup-item"><span>Printing Cost:</span><span>₹${printingCost.toFixed(2)}</span></div>`;
-            resultHTML += `<div class="breakup-item"><span>Lamination Cost:</span><span>₹${laminationCost.toFixed(2)}</span></div>`;
-            resultHTML += `<div class="breakup-item"><span>Gumming Strip Cost:</span><span>₹${gummingStripCost.toFixed(2)}</span></div>`;
-            resultHTML += `</div>`;
-
-            document.getElementById('calculationResult').innerHTML = resultHTML;
+            resultHTML += `<div class="flex justify-between mb-1"><span class="text-gray-600">Printing Cost:</span><span class="font-bold text-gray-800">₹${printingCost.toFixed(2)}</span></div>`;
+            resultHTML += `<div class="flex justify-between mb-1"><span class="text-gray-600">Lamination Cost:</span><span class="font-bold text-gray-800">₹${laminationCost.toFixed(2)}</span></div>`;
+            resultHTML += `<div class="flex justify-between mb-1"><span class="text-gray-600">Gumming Strip Cost:</span><span class="font-bold text-gray-800">₹${gummingStripCost.toFixed(2)}</span></div>`;
+            resultDiv.innerHTML = resultHTML;
         }
     </script>
 </body>
