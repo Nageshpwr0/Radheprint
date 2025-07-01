@@ -178,9 +178,48 @@ function calculate() {
       }
       bindingCost = Math.max(bindingCost, 1200); break;
     case "section-perfect":
-      if (qty > 2500) bindingCost = qty * 0.06 * (pages + 4);
-      else bindingCost = qty * 0.08 * (pages + 4);
-      bindingCost = Math.max(bindingCost, 4000); break;
+      
+   let ratesection;
+
+if (qty > 1000 && qty <= 3100) {
+  if (pages > 100) {
+    ratesection = 0.05;
+  } else if (pages >= 60 && pages <= 100) {
+    ratesection = 0.06;
+  } else if (pages >= 35 && pages < 60) {
+    ratesection = 0.07;
+  } else if (pages < 35) {
+    ratesection = 0.08;
+  }
+} else if (qty > 3100 && qty <= 6000) {
+  if (pages > 60) {
+    ratesection = 0.05;
+  } else if (pages >= 36 && pages <= 60) {
+    ratesection = 0.06;
+  } else if (pages <= 35) {
+    ratesection = 0.07;
+  }
+} else if (qty > 6000) {
+  if (pages > 60) {
+    ratesection = 0.5;
+  } else if (pages <= 60) {
+    ratesection = 0.6;
+  }
+} else {
+  // default rate for qty <= 1000
+  if (pages > 150) {
+    ratesection = 0.05;
+  } else if (pages >= 100 && pages <= 150) {
+    ratesection = 0.06;
+  } else if (pages >= 60 && pages < 100) {
+    ratesection = 0.07;
+  } else if (pages < 60) {
+    ratesection = 0.08;
+  }
+}
+
+bindingCost = qty * ratesection * (pages + 4);
+bindingCost = Math.max(bindingCost, 4000) ; break;
     case "perfect-binding":
       if (qty > 2500) bindingCost = qty * 0.035 * (pages + 4);
       else bindingCost = qty * 0.04 * (pages + 4);
